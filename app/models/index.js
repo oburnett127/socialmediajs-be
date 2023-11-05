@@ -19,6 +19,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
+db.jobs = require("./job.model.js")(sequelize, Sequelize);
+db.stakeholder = require("./stakeholder.model.js")(sequelize, Sequelize);
+db.userinfo = require("./userinfo.model.js")(sequelize, Sequelize);
 
 module.exports = db;

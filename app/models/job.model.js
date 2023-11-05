@@ -8,15 +8,18 @@ module.exports = (sequelize, Sequelize) => {
     },
     title: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: "Job title"
     },
     desc: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: "Job description"
     },
     requirements: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: "Job requirements"
     },
     postDate: {
       type: Sequelize.DATE,

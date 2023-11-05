@@ -1,22 +1,16 @@
 const db = require("../models");
-const UserInfo = db.userInfos;
+const UserInfo = db.userinfo;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new UserInfo
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
   // Create a UserInfo
   const userInfo = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    email: req.body.email,
+    password: req.body.password,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    isAdmin: req.body.isAdmin ? req.body.isAdmin : false
   };
 
   // Save UserInfo in the database
@@ -84,7 +78,7 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update UserInfo with id=${id}. Maybe UserInfo was not found or req.body is empty!`
+          message: `Cannot update UserInfo with id=${id}. Maybe UserInfo was not found or req.body is empty.`
         });
       }
     })
@@ -105,11 +99,11 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "UserInfo was deleted successfully!"
+          message: "UserInfo was deleted successfully."
         });
       } else {
         res.send({
-          message: `Cannot delete UserInfo with id=${id}. Maybe UserInfo was not found!`
+          message: `Cannot delete UserInfo with id=${id}. Maybe UserInfo was not found.`
         });
       }
     })
@@ -127,7 +121,7 @@ exports.deleteAll = (req, res) => {
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} UserInfos were deleted successfully!` });
+      res.send({ message: `${nums} UserInfos were deleted successfully.` });
     })
     .catch(err => {
       res.status(500).send({

@@ -4,14 +4,6 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new job
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
   // Create a job
   const job = {
     title: req.body.title,
@@ -85,7 +77,7 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Job with id=${id}. Maybe Job was not found or req.body is empty!`
+          message: `Cannot update Job with id=${id}. Maybe Job was not found or req.body is empty.`
         });
       }
     })
@@ -106,11 +98,11 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Job was deleted successfully!"
+          message: "Job was deleted successfully."
         });
       } else {
         res.send({
-          message: `Cannot delete Job with id=${id}. Maybe Job was not found!`
+          message: `Cannot delete Job with id=${id}. Maybe Job was not found.`
         });
       }
     })
@@ -128,7 +120,7 @@ exports.deleteAll = (req, res) => {
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Jobs were deleted successfully!` });
+      res.send({ message: `${nums} Jobs were deleted successfully.` });
     })
     .catch(err => {
       res.status(500).send({

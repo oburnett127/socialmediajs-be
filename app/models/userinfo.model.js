@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     lastName: {
-      type: Sequelize.DATE,
+      type: Sequelize.STRING,
       allowNull: false
     },
     isAdmin: {

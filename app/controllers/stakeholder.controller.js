@@ -1,22 +1,13 @@
 const db = require("../models");
-const Stakeholder = db.stakeholders;
+const Stakeholder = db.stakeholder;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Stakeholder
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
-
   // Create a Stakeholder
   const stakeholder = {
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
   };
 
   // Save Stakeholder in the database
@@ -84,7 +75,7 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Stakeholder with id=${id}. Maybe Stakeholder was not found or req.body is empty!`
+          message: `Cannot update Stakeholder with id=${id}. Maybe Stakeholder was not found or req.body is empty.`
         });
       }
     })
@@ -105,11 +96,11 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Stakeholder was deleted successfully!"
+          message: "Stakeholder was deleted successfully."
         });
       } else {
         res.send({
-          message: `Cannot delete Stakeholder with id=${id}. Maybe Stakeholder was not found!`
+          message: `Cannot delete Stakeholder with id=${id}. Maybe Stakeholder was not found.`
         });
       }
     })
@@ -127,7 +118,7 @@ exports.deleteAll = (req, res) => {
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Stakeholders were deleted successfully!` });
+      res.send({ message: `${nums} Stakeholders were deleted successfully.` });
     })
     .catch(err => {
       res.status(500).send({
