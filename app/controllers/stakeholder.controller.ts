@@ -1,6 +1,5 @@
-const db = require("../models");
-const Stakeholder = db.stakeholder;
-const Op = db.Sequelize.Op;
+const db3 = require("../models");
+const Stakeholder = db3.stakeholder;
 
 // Create and Save a new Stakeholder
 exports.create = (req, res) => {
@@ -25,10 +24,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Stakeholders from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-
-  Stakeholder.findAll({ where: condition })
+  
+  Stakeholder.findAll()
     .then(data => {
       res.send(data);
     })

@@ -1,4 +1,4 @@
-module.exports = (sequelize, Sequelize) => {
+ export default (sequelize, Sequelize) => {
   const Stakeholder = sequelize.define("stakeholder", {
     id: {
       type: Sequelize.INTEGER,

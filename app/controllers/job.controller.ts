@@ -1,6 +1,5 @@
-const db = require("../models");
-const Job = db.jobs;
-const Op = db.Sequelize.Op;
+const db4 = require("../models");
+const Job = db4.jobs;
 
 // Create and Save a new job
 exports.create = (req, res) => {
@@ -27,10 +26,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Jobs from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Job.findAll({ where: condition })
+  Job.findAll()
     .then(data => {
       res.send(data);
     })

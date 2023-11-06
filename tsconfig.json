@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      // For CommonJS
+      //"module": "commonjs",
+      // For ES Modules
+      "module": "esnext", // or "module": "es2020", "module": "es2015"
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "moduleResolution": "node"
+      
+    },
+  }
+  
+  

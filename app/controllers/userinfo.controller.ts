@@ -1,6 +1,5 @@
-const db = require("../models");
-const UserInfo = db.userinfo;
-const Op = db.Sequelize.Op;
+const db2 = require("../models");
+const UserInfo = db2.userinfo;
 
 // Create and Save a new UserInfo
 exports.create = (req, res) => {
@@ -28,10 +27,8 @@ exports.create = (req, res) => {
 
 // Retrieve all UserInfos from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  UserInfo.findAll({ where: condition })
+  UserInfo.findAll()
     .then(data => {
       res.send(data);
     })
