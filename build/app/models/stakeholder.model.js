@@ -1,20 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (sequelize, Sequelize) => {
-    const UserInfo = sequelize.define("userInfo", {
+exports.default = (function (sequelize, Sequelize) {
+    var Stakeholder = sequelize.define("stakeholder", {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             allowNull: false,
             primaryKey: true
-        },
-        email: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
-        password: {
-            type: Sequelize.STRING,
-            allowNull: false
         },
         firstName: {
             type: Sequelize.STRING,
@@ -23,11 +15,7 @@ exports.default = (sequelize, Sequelize) => {
         lastName: {
             type: Sequelize.STRING,
             allowNull: false
-        },
-        isAdmin: {
-            type: Sequelize.BOOLEAN,
-            allowNull: false
         }
     });
-    return UserInfo;
-};
+    return Stakeholder;
+});

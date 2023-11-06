@@ -1,14 +1,29 @@
 {
-    "compilerOptions": {
-      // For CommonJS
-      //"module": "commonjs",
-      // For ES Modules
-      "module": "esnext", // or "module": "es2020", "module": "es2015"
-      "outDir": "./dist",
-      "esModuleInterop": true,
-      "moduleResolution": "node"
-      
-    },
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "strict": false,
+    "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "composite": true,
+    "skipLibCheck": true,
+    "noEmitHelpers": false,
+    "baseUrl": "."
   }
-  
-  
+}

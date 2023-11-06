@@ -1,5 +1,5 @@
-module.exports = app => {
-    const jobs = require("../controllers/job.controller.js");
+module.exports = function (app) {
+    var jobs = require("../controllers/job.controller.js");
     var router = require("express").Router();
     router.post("/", jobs.create);
     router.get("/", jobs.findAll);

@@ -1,5 +1,5 @@
-module.exports = app => {
-    const stakeholders = require("../controllers/stakeholder.controller.js");
+module.exports = function (app) {
+    var stakeholders = require("../controllers/stakeholder.controller.js");
     var router = require("express").Router();
     router.post("/", stakeholders.create);
     router.get("/", stakeholders.findAll);

@@ -15,7 +15,7 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-import { db } from "./app/models/index";
+import { db } from "./app/models/index.js";
 
 db.sequelize.sync() 
   .then(() => {
@@ -30,9 +30,9 @@ db.sequelize.sync()
 //   console.log("Drop and re-sync db.");
 // });
 
-require("./app/routes/job.routes")(app);
-require("./app/routes/stakeholder.routes")(app);
-require("./app/routes/userinfo.routes")(app);
+require("./app/routes/job.routes.js")(app);
+require("./app/routes/stakeholder.routes.js")(app);
+require("./app/routes/userinfo.routes.js")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

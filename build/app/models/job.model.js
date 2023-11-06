@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (sequelize, Sequelize) => {
-    const Job = sequelize.define("job", {
+exports.default = (function (sequelize, Sequelize) {
+    var Job = sequelize.define("job", {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -29,4 +29,4 @@ exports.default = (sequelize, Sequelize) => {
         }
     });
     return Job;
-};
+});

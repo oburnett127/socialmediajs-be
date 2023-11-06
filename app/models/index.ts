@@ -44,5 +44,3 @@ export const db: Db = {
   stakeholder: Stakeholder(sequelize, Sequelize), // Assuming Stakeholder is initialized this way
   userinfo: UserInfo(sequelize, Sequelize), // Assuming UserInfo is initialized this way
 };
-
-module.exports = db;
