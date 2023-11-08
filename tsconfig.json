@@ -1,29 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "importHelpers": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "forceConsistentCasingInFileNames": true,
-    "removeComments": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "strict": false,
-    "noFallthroughCasesInSwitch": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "composite": true,
-    "skipLibCheck": true,
-    "noEmitHelpers": false,
-    "baseUrl": "."
-  }
+      "module": "ESNext",
+      "target": "ESNext",
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "noImplicitAny": true,
+      "removeComments": true,
+      "sourceMap": true,
+      "forceConsistentCasingInFileNames": true,
+      "strictFunctionTypes": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "paths": {
+          "*": [
+              "node_modules/*",
+          ]
+      }
+  },
+  "include": [
+      "app/**/*"
+  ]
 }
+  
