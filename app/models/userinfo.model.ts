@@ -1,29 +1,44 @@
-export default (sequelize: any, Sequelize: any) => {
-  const UserInfo = sequelize.define("userInfo", {
+import { BuildOptions, DataTypes, Model, Sequelize as SequelizeTypes } from 'sequelize';
+
+interface UserInfoAttributes {
+  id: number;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  isAdmin: boolean;
+}
+
+interface UserInfoCreationAttributes extends Optional<UserInfoAttributes, 'id'> {}
+
+interface UserInfoInstance extends Model<UserInfoAttributes, UserInfoCreationAttributes>, UserInfoAttributes {}
+
+export default (sequelize: SequelizeTypes, DataTypes: typeof SequelizeTypes.DataTypes): ModelStatic<UserInfoInstance> => {
+  const UserInfo = sequelize.define<UserInfoInstance>('userInfo', {
     id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true
     },
     email: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     firstName: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     lastName: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     isAdmin: {
-      type: Sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false
     }  
   });

@@ -1,41 +1,40 @@
-const express = require("express");
-const cors = require("cors");
+import express, { Application } from "express";
+import cors from "cors";
+import { db } from "./models/index";
 
-const app = express();
+const app: Application = express();
 
-var corsOptions = {
-  origin: "http://localhost:8080"
+const corsOptions = {
+  origin: "http://localhost:8080",
 };
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
 app.use(express.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-import { db } from "./models/index.js";
-
-db.sequelize.sync() 
+db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
   })
-  .catch((err) => {
+  .catch((err: Error) => {
     console.log("Failed to sync db: " + err.message);
   });
 
-// // drop the table if it already exists
+// Uncomment the next line if you want to force-drop and re-sync the database
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });
 
-require("./app/routes/job.routes.js")(app);
-require("./app/routes/stakeholder.routes.js")(app);
-require("./app/routes/userinfo.routes.js")(app);
+import jobRoutes from "./app/routes/job.routes";
+import stakeholderRoutes from "./app/routes/stakeholder.routes";
+import userinfoRoutes from "./app/routes/userinfo.routes";
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
+jobRoutes(app);
+stakeholderRoutes(app);
+userinfoRoutes(app);
+
+const PORT: number = parseInt(process.env.PORT, 10) || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

@@ -1,7 +1,9 @@
-module.exports = app => {
-    const stakeholders = require("../controllers/stakeholder.controller.js");
-  
-    var router = require("express").Router();
+import { Router } from 'express';
+import { Express } from 'express-serve-static-core';
+import * as stakeholders from '../controllers/stakeholder.controller';
+
+module.exports = (app: Express) => {
+    const router: Router = Router();
   
     router.post("/", stakeholders.create);
   
@@ -14,4 +16,4 @@ module.exports = app => {
     router.delete("/:id", stakeholders.delete);
   
     app.use('/api/stakeholders', router);
-  };
+};

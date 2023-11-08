@@ -1,44 +1,47 @@
-const db3 = require("../models");
-const Stakeholder = db3.stakeholder;
+import { Request, Response } from 'express';
+import { db3 } from '../models'; // Adjust the import to your actual file structure
+import { StakeholderInstance } from '../models/stakeholder'; // Assuming StakeholderInstance is properly typed
 
-// Create and Save a new Stakeholder
-exports.create = (req, res) => {
-  // Create a Stakeholder
-  const stakeholder = {
+// Assuming db3.stakeholder is a Sequelize model instance with proper typing
+const Stakeholder = db3.stakeholder as typeof StakeholderInstance;
+
+interface StakeholderPayload {
+  firstName: string;
+  lastName: string;
+  published?: boolean; // Include other fields as necessary
+}
+
+export const create = (req: Request, res: Response) => {
+  const stakeholder: StakeholderPayload = {
     firstName: req.body.firstName,
-    lastName: req.body.lastName
+    lastName: req.body.lastName,
+    // include other fields from req.body as necessary
   };
 
-  // Save Stakeholder in the database
   Stakeholder.create(stakeholder)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Stakeholder."
+        message: err.message || "Some error occurred while creating the Stakeholder."
       });
     });
 };
 
-// Retrieve all Stakeholders from the database.
-exports.findAll = (req, res) => {
-  
+export const findAll = (req: Request, res: Response) => {
   Stakeholder.findAll()
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving stakeholders."
+        message: err.message || "Some error occurred while retrieving stakeholders."
       });
     });
 };
 
-// Find a single Stakeholder with an id
-exports.findOne = (req, res) => {
+export const findOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Stakeholder.findByPk(id)
@@ -58,15 +61,14 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a Stakeholder by the id in the request
-exports.update = (req, res) => {
+export const update = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Stakeholder.update(req.body, {
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num === 1) {
         res.send({
           message: "Stakeholder was updated successfully."
         });
@@ -83,15 +85,14 @@ exports.update = (req, res) => {
     });
 };
 
-// Delete a Stakeholder with the specified id in the request
-exports.delete = (req, res) => {
+export const deleteStakeholder = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Stakeholder.destroy({
     where: { id: id }
   })
     .then(num => {
-      if (num == 1) {
+      if (num === 1) {
         res.send({
           message: "Stakeholder was deleted successfully."
         });
@@ -108,8 +109,7 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Stakeholders from the database.
-exports.deleteAll = (req, res) => {
+export const deleteAll = (req: Request, res: Response) => {
   Stakeholder.destroy({
     where: {},
     truncate: false
@@ -119,22 +119,19 @@ exports.deleteAll = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all stakeholders."
+        message: err.message || "Some error occurred while removing all stakeholders."
       });
     });
 };
 
-// find all published Stakeholder
-exports.findAllPublished = (req, res) => {
+export const findAllPublished = (req: Request, res: Response) => {
   Stakeholder.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving stakeholders."
+        message: err.message || "Some error occurred while retrieving stakeholders."
       });
     });
 };

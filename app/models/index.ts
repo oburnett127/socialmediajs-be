@@ -1,7 +1,24 @@
+import { Sequelize } from "sequelize";
 import dbConfig from "../config/db.config"; // assuming export default is used in db.config.ts
 
-import { Sequelize } from "sequelize";
+import Job from "./job.model"; // Assuming these are the models defined with Sequelize.define
+import Stakeholder from "./stakeholder.model";
+import UserInfo from "./userinfo.model";
 
+// It's a good practice to define attributes as interfaces for strong typing
+interface JobAttributes {
+  // Define job model attributes here
+}
+
+interface StakeholderAttributes {
+  // Define stakeholder model attributes here
+}
+
+interface UserInfoAttributes {
+  // Define user info model attributes here
+}
+
+// Sequelize instance initialization with typing for known properties
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: 'mysql',
@@ -10,37 +27,35 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     min: dbConfig.pool.min,
     acquire: dbConfig.pool.acquire,
     idle: dbConfig.pool.idle
-  }
+  },
 });
 
-// If you're using TypeScript, it's best practice to define interfaces for your models.
-// For instance:
-//
-// import { JobModel } from "./job.model";
-// import { StakeholderModel } from "./stakeholder.model";
-// import { UserInfoModel } from "./userinfo.model";
+// Define model static types as interfaces which extend Model for each respective attribute set
+interface JobInstance extends Model<JobAttributes>, JobAttributes {}
+interface StakeholderInstance extends Model<StakeholderAttributes>, StakeholderAttributes {}
+interface UserInfoInstance extends Model<UserInfoAttributes>, UserInfoAttributes {}
 
-// Initialize models
-// Here you would import your models using the TypeScript import syntax.
-// You would also ensure that the corresponding model files export classes or functions appropriately.
-// This might look something like this:
+// Static model types
+interface JobModel extends ModelStatic<JobInstance> {}
+interface StakeholderModel extends ModelStatic<StakeholderInstance> {}
+interface UserInfoModel extends ModelStatic<UserInfoInstance> {}
 
-import Job from "./job.model";
-import Stakeholder from "./stakeholder.model";
-import UserInfo from "./userinfo.model";
-
+// Database Interface
 interface Db {
   sequelize: Sequelize;
   Sequelize: typeof Sequelize;
-  jobs: typeof Job;
-  stakeholder: typeof Stakeholder;
-  userinfo: typeof UserInfo;
+  jobs: JobModel;
+  stakeholder: StakeholderModel;
+  userinfo: UserInfoModel;
 }
 
-export const db: Db = {
+// db object
+const db: Db = {
   Sequelize,
   sequelize,
-  jobs: Job(sequelize, Sequelize), // Assuming Job is initialized this way
-  stakeholder: Stakeholder(sequelize, Sequelize), // Assuming Stakeholder is initialized this way
-  userinfo: UserInfo(sequelize, Sequelize), // Assuming UserInfo is initialized this way
+  jobs: Job(sequelize), // Assuming Job function properly initializes the model
+  stakeholder: Stakeholder(sequelize), // Assuming Stakeholder function does the same
+  userinfo: UserInfo(sequelize), // Assuming UserInfo function as well
 };
+
+export default db;

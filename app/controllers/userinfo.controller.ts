@@ -1,51 +1,54 @@
-const db2 = require("../models");
+import { Request, Response } from 'express';
+import { db2 } from '../models'; // Replace with the actual path to your Sequelize models
+
+// Assuming db2.userinfo is a Sequelize model with a correctly typed definition
 const UserInfo = db2.userinfo;
 
-// Create and Save a new UserInfo
-exports.create = (req, res) => {
-  // Create a UserInfo
-  const userInfo = {
+interface UserInfoRequest {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  isAdmin: boolean;
+}
+
+export const create = (req: Request, res: Response) => {
+  const userInfo: UserInfoRequest = {
     email: req.body.email,
     password: req.body.password,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    isAdmin: req.body.isAdmin ? req.body.isAdmin : false
+    isAdmin: req.body.isAdmin || false, // Simplified with logical OR operator
   };
 
-  // Save UserInfo in the database
   UserInfo.create(userInfo)
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the UserInfo."
+        message: err.message || "Some error occurred while creating the UserInfo."
       });
     });
 };
 
-// Retrieve all UserInfos from the database.
-exports.findAll = (req, res) => {
-
+export const findAll = (req: Request, res: Response) => {
   UserInfo.findAll()
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving userInfos."
+        message: err.message || "Some error occurred while retrieving userInfos."
       });
     });
 };
 
-// Find a single UserInfo with an id
-exports.findOne = (req, res) => {
+export const findOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   UserInfo.findByPk(id)
-    .then(data => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
@@ -54,22 +57,19 @@ exports.findOne = (req, res) => {
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message: "Error retrieving UserInfo with id=" + id
       });
     });
 };
 
-// Update a UserInfo by the id in the request
-exports.update = (req, res) => {
+export const update = (req: Request, res: Response) => {
   const id = req.params.id;
 
-  UserInfo.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
+  UserInfo.update(req.body, { where: { id: id } })
+    .then((num) => {
+      if (num === 1) {
         res.send({
           message: "UserInfo was updated successfully."
         });
@@ -79,22 +79,19 @@ exports.update = (req, res) => {
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message: "Error updating UserInfo with id=" + id
       });
     });
 };
 
-// Delete a UserInfo with the specified id in the request
-exports.delete = (req, res) => {
+export const deleteUserInfo = (req: Request, res: Response) => {
   const id = req.params.id;
 
-  UserInfo.destroy({
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
+  UserInfo.destroy({ where: { id: id } })
+    .then((num) => {
+      if (num === 1) {
         res.send({
           message: "UserInfo was deleted successfully."
         });
@@ -104,40 +101,33 @@ exports.delete = (req, res) => {
         });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message: "Could not delete UserInfo with id=" + id
       });
     });
 };
 
-// Delete all UserInfos from the database.
-exports.deleteAll = (req, res) => {
-  UserInfo.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {
+export const deleteAll = (req: Request, res: Response) => {
+  UserInfo.destroy({ where: {}, truncate: false })
+    .then((nums) => {
       res.send({ message: `${nums} UserInfos were deleted successfully.` });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all userInfos."
+        message: err.message || "Some error occurred while removing all userInfos."
       });
     });
 };
 
-// find all published UserInfo
-exports.findAllPublished = (req, res) => {
+export const findAllPublished = (req: Request, res: Response) => {
   UserInfo.findAll({ where: { published: true } })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving userInfos."
+        message: err.message || "Some error occurred while retrieving userInfos."
       });
     });
 };
