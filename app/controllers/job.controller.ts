@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
-import { initializeJobModel } from '../models/job.model.js';
-import db from '../models/index.js';
-import {Job } from '../models/job.model.js';
 
-const sequelize = db.sequelize;
+//import { initializeJobModel } from '../models/job.model.js';
+
+//import db from '../models/index.js';
+
+import { Job } from '../models/job.model.js';
+
+//const sequelize = db.sequelize;
 
 //const Job = initializeJobModel(sequelize);
 

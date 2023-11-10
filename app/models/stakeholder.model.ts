@@ -32,16 +32,3 @@ export function initializeStakeholderModel(sequelize: Sequelize): typeof Stakeho
 
   return Stakeholder;
 }
-
-// //Change it from sqllite to mysql
-// initializeStakeholderModel(new Sequelize('sqlite::memory:'));
-
-// type StakeholderAttributes = {
-//   id: number;
-//   firstName: string;
-//   lastName: string;
-// };
-
-// type StakeholderCreationAttributes = Optional<StakeholderAttributes, 'id'>;
-
-// export { Stakeholder, StakeholderAttributes, StakeholderCreationAttributes };

@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import * as stakeholders from '../controllers/stakeholder.controller.js';
 
-export default function(app: Router) {
+export default function(router: Router) {
   
-    app.post("/", stakeholders.create);
+    router.post("/", stakeholders.create);
   
-    app.get("/", stakeholders.findAll);
+    router.get("/", stakeholders.findAll);
   
-    app.get("/:id", stakeholders.findOne);
+    router.get("/:id", stakeholders.findOne);
   
-    app.put("/:id", stakeholders.update);
+    router.put("/:id", stakeholders.update);
   
     //router.delete("/:id", stakeholders.delete);
   
-    app.use('/api/stakeholders', app);
+    router.use('/api/stakeholders', router);
 };
