@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { db2 } from '../models'; // Replace with the actual path to your Sequelize models
+import db from '../models';
 
-// Assuming db2.userinfo is a Sequelize model with a correctly typed definition
-const UserInfo = db2.userinfo;
+const UserInfo = db.userinfo;
 
 interface UserInfoRequest {
   email: string;
@@ -18,14 +17,14 @@ export const create = (req: Request, res: Response) => {
     password: req.body.password,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    isAdmin: req.body.isAdmin || false, // Simplified with logical OR operator
+    isAdmin: req.body.isAdmin || false,
   };
 
   UserInfo.create(userInfo)
-    .then((data) => {
+    .then((data: any) => {
       res.send(data);
     })
-    .catch((err) => {
+    .catch((err: any) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the UserInfo."
       });
@@ -34,10 +33,10 @@ export const create = (req: Request, res: Response) => {
 
 export const findAll = (req: Request, res: Response) => {
   UserInfo.findAll()
-    .then((data) => {
+    .then((data: any) => {
       res.send(data);
     })
-    .catch((err) => {
+    .catch((err: any) => {
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving userInfos."
       });
@@ -48,7 +47,7 @@ export const findOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   UserInfo.findByPk(id)
-    .then((data) => {
+    .then((data: any) => {
       if (data) {
         res.send(data);
       } else {
@@ -116,18 +115,6 @@ export const deleteAll = (req: Request, res: Response) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error occurred while removing all userInfos."
-      });
-    });
-};
-
-export const findAllPublished = (req: Request, res: Response) => {
-  UserInfo.findAll({ where: { published: true } })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving userInfos."
       });
     });
 };

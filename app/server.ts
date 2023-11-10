@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import cors from "cors";
-import { db } from "./models/index";
+import db from "./models/index";
 
 const app: Application = express();
 
@@ -21,7 +21,6 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-// Uncomment the next line if you want to force-drop and re-sync the database
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });

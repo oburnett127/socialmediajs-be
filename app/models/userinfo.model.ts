@@ -1,4 +1,4 @@
-import { BuildOptions, DataTypes, Model, Sequelize as SequelizeTypes } from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
 interface UserInfoAttributes {
   id: number;
@@ -9,39 +9,58 @@ interface UserInfoAttributes {
   isAdmin: boolean;
 }
 
-interface UserInfoCreationAttributes extends Optional<UserInfoAttributes, 'id'> {}
+interface UserInfoCreationAttributes {
+  id?: number;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  isAdmin?: boolean;
+}
 
-interface UserInfoInstance extends Model<UserInfoAttributes, UserInfoCreationAttributes>, UserInfoAttributes {}
+class UserInfo extends Model<UserInfoAttributes, UserInfoCreationAttributes>
+  implements UserInfoAttributes {
+  public id!: number;
+  public email!: string;
+  public password!: string;
+  public firstName!: string;
+  public lastName!: string;
+  public isAdmin!: boolean;
+}
 
-export default (sequelize: SequelizeTypes, DataTypes: typeof SequelizeTypes.DataTypes): ModelStatic<UserInfoInstance> => {
-  const UserInfo = sequelize.define<UserInfoInstance>('userInfo', {
+export function initializeUserInfo(sequelize: Sequelize): void {
+  UserInfo.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
+      primaryKey: true,
       allowNull: false,
-      primaryKey: true
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
-    }  
+      allowNull: false,
+      defaultValue: false,
+    },
+  }, {
+    sequelize,
+    modelName: 'userInfo',
   });
+}
 
-  return UserInfo;
-};
+export default UserInfo;

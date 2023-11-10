@@ -1,4 +1,3 @@
-// Define an interface that describes the structure of your DB config
 interface DbConfig {
   HOST: string;
   USER: string;
@@ -13,7 +12,6 @@ interface DbConfig {
   };
 }
 
-// Create a config object with the `DbConfig` type
 const dbConfig: DbConfig = {
   HOST: "localhost",
   USER: "root",
