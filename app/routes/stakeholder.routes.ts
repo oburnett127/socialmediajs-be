@@ -1,19 +1,17 @@
 import { Router } from 'express';
-import { Express } from 'express-serve-static-core';
-import * as stakeholders from '../controllers/stakeholder.controller';
+import * as stakeholders from '../controllers/stakeholder.controller.js';
 
-module.exports = (app: Express) => {
-    const router: Router = Router();
+export default function(app: Router) {
   
-    router.post("/", stakeholders.create);
+    app.post("/", stakeholders.create);
   
-    router.get("/", stakeholders.findAll);
+    app.get("/", stakeholders.findAll);
   
-    router.get("/:id", stakeholders.findOne);
+    app.get("/:id", stakeholders.findOne);
   
-    router.put("/:id", stakeholders.update);
+    app.put("/:id", stakeholders.update);
   
-    router.delete("/:id", stakeholders.delete);
+    //router.delete("/:id", stakeholders.delete);
   
-    app.use('/api/stakeholders', router);
+    app.use('/api/stakeholders', app);
 };

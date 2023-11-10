@@ -1,30 +1,21 @@
+// job.model.ts
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
-interface JobAttributes {
-  id: number;
-  title: string;
-  description: string;
-  requirements: string;
-  postDate: Date;
-}
-
-interface JobCreationAttributes {
-  title: string;
-  description: string;
-  requirements: string;
-  postDate: Date;
-}
-
-class JobModel extends Model<JobAttributes, JobCreationAttributes> implements JobAttributes {
+// First, we define the model class by extending Sequelize's Model class
+export class Job extends Model {
+  // Define attributes here
   public id!: number;
   public title!: string;
-  public description!: string;
-  public requirements!: string;
+  public description?: string;
+  public requirements?: string;
   public postDate!: Date;
+  // You can also define other instance level methods here
 }
 
-export function initJobModel(sequelize: Sequelize): typeof JobModel {
-  JobModel.init({
+// Then, we export a function that accepts a Sequelize instance and uses it to initialize our model.
+export function initializeJobModel(sequelize: Sequelize): typeof Job {
+  Job.init({
+    // Model attributes are defined here
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
@@ -35,23 +26,23 @@ export function initJobModel(sequelize: Sequelize): typeof JobModel {
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     requirements: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     postDate: {
       type: DataTypes.DATE,
-      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
+    // ...more attributes...
   }, {
-    tableName: 'jobs',
     sequelize,
+    modelName: 'Job',
+    // ...other model options...
   });
 
-  return JobModel;
+  return Job;
 }
-
-export default JobModel;

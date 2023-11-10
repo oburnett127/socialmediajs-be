@@ -1,6 +1,6 @@
 import express, { Application } from "express";
 import cors from "cors";
-import db from "./models/index";
+import db from "./models/index.js";
 
 const app: Application = express();
 
@@ -25,9 +25,9 @@ db.sequelize.sync()
 //   console.log("Drop and re-sync db.");
 // });
 
-import jobRoutes from "./app/routes/job.routes";
-import stakeholderRoutes from "./app/routes/stakeholder.routes";
-import userinfoRoutes from "./app/routes/userinfo.routes";
+import jobRoutes from "./routes/job.routes.js";
+import stakeholderRoutes from "./routes/stakeholder.routes.js";
+import userinfoRoutes from "./routes/userinfo.routes.js";
 
 jobRoutes(app);
 stakeholderRoutes(app);

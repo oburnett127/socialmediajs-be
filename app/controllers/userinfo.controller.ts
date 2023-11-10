@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import db from '../models';
-
-const UserInfo = db.userinfo;
+import db from '../models/index.js';
+import { UserInfo } from '../models/userinfo.model.js';
 
 interface UserInfoRequest {
   email: string;
@@ -20,7 +19,7 @@ export const create = (req: Request, res: Response) => {
     isAdmin: req.body.isAdmin || false,
   };
 
-  UserInfo.create(userInfo)
+  UserInfo.create(userInfo as any)
     .then((data: any) => {
       res.send(data);
     })
@@ -67,8 +66,10 @@ export const update = (req: Request, res: Response) => {
   const id = req.params.id;
 
   UserInfo.update(req.body, { where: { id: id } })
-    .then((num) => {
-      if (num === 1) {
+    .then((result) => {
+      // Sequelize returns an array where the first element is the number of rows affected
+      const [affectedRows] = result;
+      if (affectedRows === 1) {
         res.send({
           message: "UserInfo was updated successfully."
         });

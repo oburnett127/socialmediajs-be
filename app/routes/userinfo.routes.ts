@@ -1,17 +1,13 @@
 import { Router } from 'express';
-import { Express } from 'express-serve-static-core';
-import * as userinfos from '../controllers/userinfo.controller';
+import * as userinfos from '../controllers/userinfo.controller.js';
 
-const userinfoRoutes = (app: Express) => {
-  const router: Router = Router();
+export default function (app: Router) {
 
-  router.post('/', userinfos.create);
-  router.get('/', userinfos.findAll);
-  router.get('/:id', userinfos.findOne);
-  router.put('/:id', userinfos.update);
-  router.delete('/:id', userinfos.delete);
+  app.post('/', userinfos.create);
+  app.get('/', userinfos.findAll);
+  app.get('/:id', userinfos.findOne);
+  app.put('/:id', userinfos.update);
+ // router.delete('/:id', userinfos.delete);
 
-  app.use('/api/userinfos', router);
+  app.use('/api/userinfos', app);
 };
-
-export default userinfoRoutes;

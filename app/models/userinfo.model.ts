@@ -1,25 +1,24 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-interface UserInfoAttributes {
-  id: number;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  isAdmin: boolean;
-}
+// interface UserInfoAttributes {
+//   id: number;
+//   email: string;
+//   password: string;
+//   firstName: string;
+//   lastName: string;
+//   isAdmin: boolean;
+// }
 
-interface UserInfoCreationAttributes {
-  id?: number;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  isAdmin?: boolean;
-}
+// interface UserInfoCreationAttributes {
+//   id?: number;
+//   email: string;
+//   password: string;
+//   firstName: string;
+//   lastName: string;
+//   isAdmin?: boolean;
+// }
 
-class UserInfo extends Model<UserInfoAttributes, UserInfoCreationAttributes>
-  implements UserInfoAttributes {
+export class UserInfo extends Model {
   public id!: number;
   public email!: string;
   public password!: string;
@@ -28,7 +27,7 @@ class UserInfo extends Model<UserInfoAttributes, UserInfoCreationAttributes>
   public isAdmin!: boolean;
 }
 
-export function initializeUserInfo(sequelize: Sequelize): void {
+export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
   UserInfo.init({
     id: {
       type: DataTypes.INTEGER,
@@ -59,8 +58,8 @@ export function initializeUserInfo(sequelize: Sequelize): void {
     },
   }, {
     sequelize,
-    modelName: 'userInfo',
+    modelName: 'UserInfo',
   });
-}
 
-export default UserInfo;
+  return UserInfo;
+}

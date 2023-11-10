@@ -1,8 +1,14 @@
 import { Request, Response } from 'express';
-import db from '../models';
-import StakeholderInstance from '../models/stakeholder';
+import db from '../models/index.js';
+import { Stakeholder } from '../models/stakeholder.model.js';
 
-const Stakeholder = db.stakeholder as typeof StakeholderInstance;
+interface StakeholderModelInstance {
+  create: (job: any) => Promise<any>;
+  findAll: (options?: any) => Promise<any>;
+  findByPk: (id: string | number) => Promise<any>;
+  update: (values: any, options: any) => Promise<[number, any[]]>;
+  destroy: (options: any) => Promise<number>;
+}
 
 interface StakeholderPayload {
   firstName: string;
@@ -15,7 +21,7 @@ export const create = (req: Request, res: Response) => {
     lastName: req.body.lastName,
   };
 
-  Stakeholder.create(stakeholder)
+  Stakeholder.create(stakeholder as any)
     .then((data: any) => {
       res.send(data);
     })
@@ -61,11 +67,9 @@ export const findOne = (req: Request, res: Response) => {
 export const update = (req: Request, res: Response) => {
   const id = req.params.id;
 
-  Stakeholder.update(req.body, {
-    where: { id: id }
-  })
-    .then((num: number) => {
-      if (num === 1) {
+  Stakeholder.update(req.body, { where: { id: id } })
+    .then(([affectedCount]: [number]) => { // Correct the destructuring here
+      if (affectedCount === 1) {
         res.send({
           message: "Stakeholder was updated successfully."
         });
@@ -81,6 +85,8 @@ export const update = (req: Request, res: Response) => {
       });
     });
 };
+
+
 
 export const deleteStakeholder = (req: Request, res: Response) => {
   const id = req.params.id;

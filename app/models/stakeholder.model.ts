@@ -1,17 +1,16 @@
 import {
   Model,
   DataTypes,
-  Optional,
   Sequelize
 } from 'sequelize';
 
-class Stakeholder extends Model {
+export class Stakeholder extends Model {
   declare id: number;
   declare firstName: string;
   declare lastName: string;
 }
 
-function initStakeholder(sequelize: Sequelize): void {
+export function initializeStakeholderModel(sequelize: Sequelize): typeof Stakeholder {
   Stakeholder.init({
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -30,16 +29,19 @@ function initStakeholder(sequelize: Sequelize): void {
     sequelize,
     modelName: 'stakeholder',
   });
+
+  return Stakeholder;
 }
 
-initStakeholder(new Sequelize('sqlite::memory:'));
+// //Change it from sqllite to mysql
+// initializeStakeholderModel(new Sequelize('sqlite::memory:'));
 
-type StakeholderAttributes = {
-  id: number;
-  firstName: string;
-  lastName: string;
-};
+// type StakeholderAttributes = {
+//   id: number;
+//   firstName: string;
+//   lastName: string;
+// };
 
-type StakeholderCreationAttributes = Optional<StakeholderAttributes, 'id'>;
+// type StakeholderCreationAttributes = Optional<StakeholderAttributes, 'id'>;
 
-export { Stakeholder, StakeholderAttributes, StakeholderCreationAttributes };
+// export { Stakeholder, StakeholderAttributes, StakeholderCreationAttributes };

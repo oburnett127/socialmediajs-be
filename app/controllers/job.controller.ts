@@ -1,4 +1,11 @@
 import { Request, Response } from 'express';
+import { initializeJobModel } from '../models/job.model.js';
+import db from '../models/index.js';
+import {Job } from '../models/job.model.js';
+
+const sequelize = db.sequelize;
+
+//const Job = initializeJobModel(sequelize);
 
 interface JobModelInstance {
   create: (job: any) => Promise<any>;
@@ -7,9 +14,6 @@ interface JobModelInstance {
   update: (values: any, options: any) => Promise<[number, any[]]>;
   destroy: (options: any) => Promise<number>;
 }
-
-import db from '../models';
-const Job = db.jobs;
 
 interface JobPayload {
   title: string;
@@ -26,7 +30,7 @@ export const create = (req: Request, res: Response) => {
     postDate: req.body.postDate,
   };
 
-  Job.create(job)
+  Job.create(job as any)
     .then((data: any) => {
       res.send(data);
     })
