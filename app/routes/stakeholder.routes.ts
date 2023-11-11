@@ -3,15 +3,16 @@ import * as stakeholders from '../controllers/stakeholder.controller.js';
 
 export default function(router: Router) {
   
-    router.post("/", stakeholders.create);
+    router.post("/stakeholder/create", stakeholders.create);
   
-    router.get("/", stakeholders.findAll);
+    router.get("/stakeholder/findAll", stakeholders.findAll);
   
-    router.get("/:id", stakeholders.findOne);
+    router.get("/stakeholder/findOne/:id", stakeholders.findOne);
   
-    router.put("/:id", stakeholders.update);
+    router.put("/stakeholder/update/:id", stakeholders.update);
   
-    //router.delete("/:id", stakeholders.delete);
-  
-    router.use('/api/stakeholders', router);
+    router.delete("/stakeholder/deleteStakeholder/:id", stakeholders.deleteStakeholder);
+
+    router.delete("/stakeholder/deleteAll", stakeholders.deleteAll);
+    
 };

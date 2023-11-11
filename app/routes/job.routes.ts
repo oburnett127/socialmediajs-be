@@ -1,14 +1,18 @@
 import { Router } from 'express';
 import * as jobs from '../controllers/job.controller.js';
 
-export default function (app: Router) {
-  const router: Router = Router();
+export default function (router: Router) {
 
-  router.post('/', jobs.create);
-  // router.get('/', jobs.findAll);
-  // router.get('/:id', jobs.findOne);
-  // router.put('/:id', jobs.update);
-  // router.delete('/:id', jobs.delete);
+  router.post('/job/create', jobs.create);
 
-  app.use('/api/jobs', router);
+  router.get('/job/findAll', jobs.findAll);
+
+  router.get('/job/findOne/:id', jobs.findOne);
+
+  router.put('/job/update/:id', jobs.update);
+
+  router.delete('/job/deleteJob/:id', jobs.deleteJob);
+  
+  router.delete('/job/deleteAll', jobs.deleteAll);
+
 };

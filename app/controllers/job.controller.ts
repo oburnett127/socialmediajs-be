@@ -1,14 +1,5 @@
 import { Request, Response } from 'express';
-
-//import { initializeJobModel } from '../models/job.model.js';
-
-//import db from '../models/index.js';
-
 import { Job } from '../models/job.model.js';
-
-//const sequelize = db.sequelize;
-
-//const Job = initializeJobModel(sequelize);
 
 interface JobModelInstance {
   create: (job: any) => Promise<any>;
@@ -40,6 +31,101 @@ export const create = (req: Request, res: Response) => {
     .catch((err: { message: any; }) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the Job."
+      });
+    });
+};
+
+export const findAll = (req: Request, res: Response) => {
+  Job.findAll()
+    .then((data: any) => {
+      res.send(data);
+    })
+    .catch((err: { message: any; }) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving jobs."
+      });
+    });
+};
+
+export const findOne = (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  Job.findByPk(id)
+    .then((data: any) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Job with id=${id}.`
+        });
+      }
+    })
+    .catch((err: any) => {
+      res.status(500).send({
+        message: "Error retrieving Job with id=" + id
+      });
+    });
+};
+
+export const update = (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  Job.update(req.body, { where: { id: id } })
+    .then(([affectedCount]: [number]) => {
+      if (affectedCount === 1) {
+        res.send({
+          message: "Job was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Job with id=${id}. Maybe Job was not found or req.body is empty.`
+        });
+      }
+    })
+    .catch((err: any) => {
+      res.status(500).send({
+        message: "Error updating Job with id=" + id
+      });
+    });
+};
+
+
+
+export const deleteJob = (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  Job.destroy({
+    where: { id: id }
+  })
+    .then((num: number) => {
+      if (num === 1) {
+        res.send({
+          message: "Job was deleted successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Job with id=${id}. Maybe Job was not found.`
+        });
+      }
+    })
+    .catch((err: any) => {
+      res.status(500).send({
+        message: "Could not delete Job with id=" + id
+      });
+    });
+};
+
+export const deleteAll = (req: Request, res: Response) => {
+  Job.destroy({
+    where: {},
+    truncate: false
+  })
+    .then((nums: any) => {
+      res.send({ message: `${nums} Jobs were deleted successfully.` });
+    })
+    .catch((err: { message: any; }) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while removing all jobs."
       });
     });
 };

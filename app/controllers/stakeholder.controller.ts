@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-//import db from '../models/index.js';
 import { Stakeholder } from '../models/stakeholder.model.js';
 
 interface StakeholderModelInstance {

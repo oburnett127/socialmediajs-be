@@ -1,14 +1,18 @@
 import { Router } from 'express';
 import * as userinfos from '../controllers/userinfo.controller.js';
 
-export default function (app: Router) {
+export default function(router: Router) {
 
-  app.post('/', userinfos.create);
-  app.get('/', userinfos.findAll);
-  app.get('/:id', userinfos.findOne);
-  app.put('/:id', userinfos.update);
+  router.post('/userinfo/create', userinfos.create);
+  
+  router.get('/userinfo/findAll', userinfos.findAll);
+
+  router.get('/userinfo/:id', userinfos.findOne);
+
+  router.put('/userinfo/update/:id', userinfos.update);
  
-  // router.delete('/:id', userinfos.delete);
+   router.delete('/userinfo/deleteUserInfo/:id', userinfos.deleteUserInfo);
 
-  app.use('/api/userinfos', app);
+   router.delete('/userinfo/deleteAll', userinfos.deleteAll);
+
 };

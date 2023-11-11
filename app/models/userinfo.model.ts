@@ -1,23 +1,5 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-// interface UserInfoAttributes {
-//   id: number;
-//   email: string;
-//   password: string;
-//   firstName: string;
-//   lastName: string;
-//   isAdmin: boolean;
-// }
-
-// interface UserInfoCreationAttributes {
-//   id?: number;
-//   email: string;
-//   password: string;
-//   firstName: string;
-//   lastName: string;
-//   isAdmin?: boolean;
-// }
-
 export class UserInfo extends Model {
   public id!: number;
   public email!: string;

@@ -21,10 +21,6 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
-
 import jobRoutes from "./routes/job.routes.js";
 import stakeholderRoutes from "./routes/stakeholder.routes.js";
 import userinfoRoutes from "./routes/userinfo.routes.js";
@@ -33,7 +29,9 @@ jobRoutes(app);
 stakeholderRoutes(app);
 userinfoRoutes(app);
 
-const PORT: number = parseInt(process.env.PORT, 10) || 8080;
+const portString: string | undefined = process.env.PORT;
+const PORT: number = parseInt(portString || '8080', 10);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
