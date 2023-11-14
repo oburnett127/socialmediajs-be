@@ -19,10 +19,10 @@ export const create = (req: Request, res: Response) => {
   };
 
   UserInfo.create(userInfo as any)
-    .then((data: any) => {
+    .then((data) => {
       res.send(data);
     })
-    .catch((err: any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the UserInfo."
       });
@@ -31,10 +31,10 @@ export const create = (req: Request, res: Response) => {
 
 export const findAll = (req: Request, res: Response) => {
   UserInfo.findAll()
-    .then((data: any) => {
+    .then((data) => {
       res.send(data);
     })
-    .catch((err: any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving userInfos."
       });
@@ -45,7 +45,7 @@ export const findOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   UserInfo.findByPk(id)
-    .then((data: any) => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
@@ -54,7 +54,7 @@ export const findOne = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: "Error retrieving UserInfo with id=" + id
       });
@@ -78,7 +78,7 @@ export const update = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: "Error updating UserInfo with id=" + id
       });
@@ -100,7 +100,7 @@ export const deleteUserInfo = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: "Could not delete UserInfo with id=" + id
       });
@@ -112,7 +112,7 @@ export const deleteAll = (req: Request, res: Response) => {
     .then((nums) => {
       res.send({ message: `${nums} UserInfos were deleted successfully.` });
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: err.message || "Some error occurred while removing all userInfos."
       });

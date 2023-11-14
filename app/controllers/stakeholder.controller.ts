@@ -1,14 +1,6 @@
 import { Request, Response } from 'express';
 import { Stakeholder } from '../models/stakeholder.model.js';
 
-interface StakeholderModelInstance {
-  create: (job: any) => Promise<any>;
-  findAll: (options?: any) => Promise<any>;
-  findByPk: (id: string | number) => Promise<any>;
-  update: (values: any, options: any) => Promise<[number, any[]]>;
-  destroy: (options: any) => Promise<number>;
-}
-
 interface StakeholderPayload {
   firstName: string;
   lastName: string;
@@ -21,10 +13,10 @@ export const create = (req: Request, res: Response) => {
   };
 
   Stakeholder.create(stakeholder as any)
-    .then((data: any) => {
+    .then((data) => {
       res.send(data);
     })
-    .catch((err: { message: any; }) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the Stakeholder."
       });
@@ -33,10 +25,10 @@ export const create = (req: Request, res: Response) => {
 
 export const findAll = (req: Request, res: Response) => {
   Stakeholder.findAll()
-    .then((data: any) => {
+    .then((data) => {
       res.send(data);
     })
-    .catch((err: { message: any; }) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving stakeholders."
       });
@@ -47,7 +39,7 @@ export const findOne = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Stakeholder.findByPk(id)
-    .then((data: any) => {
+    .then((data) => {
       if (data) {
         res.send(data);
       } else {
@@ -56,7 +48,7 @@ export const findOne = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err: any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: "Error retrieving Stakeholder with id=" + id
       });
@@ -78,7 +70,7 @@ export const update = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err: any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: "Error updating Stakeholder with id=" + id
       });
@@ -104,7 +96,7 @@ export const deleteStakeholder = (req: Request, res: Response) => {
         });
       }
     })
-    .catch((err: any) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: "Could not delete Stakeholder with id=" + id
       });
@@ -116,10 +108,10 @@ export const deleteAll = (req: Request, res: Response) => {
     where: {},
     truncate: false
   })
-    .then((nums: any) => {
+    .then((nums) => {
       res.send({ message: `${nums} Stakeholders were deleted successfully.` });
     })
-    .catch((err: { message: any; }) => {
+    .catch((err: Error) => {
       res.status(500).send({
         message: err.message || "Some error occurred while removing all stakeholders."
       });
