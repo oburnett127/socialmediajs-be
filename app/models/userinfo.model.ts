@@ -18,19 +18,19 @@ export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
     firstName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     lastName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     isAdmin: {

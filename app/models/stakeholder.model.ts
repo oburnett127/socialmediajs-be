@@ -18,12 +18,16 @@ export function initializeStakeholderModel(sequelize: Sequelize): typeof Stakeho
       primaryKey: true,
     },
     firstName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     lastName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: false,
+    },
+    pictureUrl: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   }, {
     sequelize,

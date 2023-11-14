@@ -16,7 +16,7 @@ export function initializeJobModel(sequelize: Sequelize): typeof Job {
       primaryKey: true,
     },
     title: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     description: {
@@ -24,7 +24,7 @@ export function initializeJobModel(sequelize: Sequelize): typeof Job {
       allowNull: true,
     },
     requirements: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     postDate: {
