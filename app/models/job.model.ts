@@ -30,6 +30,7 @@ export function initializeJobModel(sequelize: Sequelize): typeof Job {
     postDate: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
+      allowNull: false,
     },
   }, {
     sequelize,

@@ -5,9 +5,10 @@ import {
 } from 'sequelize';
 
 export class Stakeholder extends Model {
-  declare id: number;
-  declare firstName: string;
-  declare lastName: string;
+  public id!: number;
+  public firstName!: string;
+  public lastName!: string;
+  public pictureUrl?: string;
 }
 
 export function initializeStakeholderModel(sequelize: Sequelize): typeof Stakeholder {
