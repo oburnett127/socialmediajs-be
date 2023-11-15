@@ -4,12 +4,14 @@ import { Stakeholder } from '../models/stakeholder.model.js';
 interface StakeholderPayload {
   firstName: string;
   lastName: string;
+  pictureUrl: string;
 }
 
 export const create = (req: Request, res: Response) => {
   const stakeholder: StakeholderPayload = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
+    pictureUrl: req.body.pictureUrl,
   };
 
   Stakeholder.create(stakeholder as any)
