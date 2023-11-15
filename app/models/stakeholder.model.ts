@@ -33,6 +33,7 @@ export function initializeStakeholderModel(sequelize: Sequelize): typeof Stakeho
   }, {
     sequelize,
     modelName: 'stakeholder',
+    timestamps: false,
   });
 
   return Stakeholder;
