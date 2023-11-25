@@ -43,11 +43,11 @@ export class JobService {
   }
 
   public async deleteAll(): Promise<void | number> {
-    Job.destroy({
+    return Job.destroy({
       where: {},
       truncate: false
     })
-      .then((nums: any) => nums)
-      .catch((err: { message: any; }) => console.log(err.message));
+      .then((num: number) => num)
+      .catch((err: any ) => console.log(err.message));
   }
 }
