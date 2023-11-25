@@ -6,7 +6,6 @@ export class UserInfo extends Model {
   public password!: string;
   public firstName!: string;
   public lastName!: string;
-  public isAdmin!: boolean;
 }
 
 export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
@@ -32,11 +31,6 @@ export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
     lastName: {
       type: DataTypes.STRING(20),
       allowNull: false,
-    },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
     },
   }, {
     sequelize,
