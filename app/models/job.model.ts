@@ -35,7 +35,7 @@ export function initializeJobModel(sequelize: Sequelize): typeof Job {
   }, {
     sequelize,
     modelName: 'Job',
-    timestamps: false,
+    timestamps: true,
   });
 
   return Job;
