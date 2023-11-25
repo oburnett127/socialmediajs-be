@@ -6,6 +6,7 @@
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
       "noImplicitAny": true,
+      "experimentalDecorators": true,
       "removeComments": true,
       "sourceMap": true,
       "forceConsistentCasingInFileNames": true,
