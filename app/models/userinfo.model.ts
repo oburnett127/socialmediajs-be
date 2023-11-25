@@ -1,6 +1,6 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export class UserInfo extends Model {
+export class Userinfo extends Model {
   public id!: number;
   public email!: string;
   public password!: string;
@@ -8,8 +8,8 @@ export class UserInfo extends Model {
   public lastName!: string;
 }
 
-export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
-  UserInfo.init({
+export function initializeUserinfoModel(sequelize: Sequelize): typeof Userinfo {
+  Userinfo.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -34,9 +34,9 @@ export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
     },
   }, {
     sequelize,
-    modelName: 'UserInfo',
+    modelName: 'userinfo',
     timestamps: false,
   });
 
-  return UserInfo;
+  return Userinfo;
 }

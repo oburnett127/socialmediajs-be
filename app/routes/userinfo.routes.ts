@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as userinfos from '../controllers/userinfo.controller.js';
+import * as userinfos from '../controllers/userinfo.js';
 
 export default function(router: Router) {
 
@@ -13,7 +13,7 @@ export default function(router: Router) {
 
   router.put('/userinfo/update/:id', userinfos.update);
  
-   router.delete('/userinfo/deleteUserInfo/:id', userinfos.deleteUserInfo);
+   router.delete('/userinfo/deleteUserinfo/:id', userinfos.deleteUserinfo);
 
    router.delete('/userinfo/deleteAll', userinfos.deleteAll);
 

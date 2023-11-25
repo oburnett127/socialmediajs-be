@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as stakeholders from '../controllers/stakeholder.controller.js';
+import * as stakeholders from '../controllers/stakeholder.js';
 
 export default function(router: Router) {
   
