@@ -10,7 +10,11 @@ import './controllers/job';
 
 // load everything needed to the Container
 let container = new Container();
-container.bind<JobService>(TYPES.JobService).to(JobService);
+container.bind<JobService>(TYPES.JobService).to(JobService).inSingletonScope();
+container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService).inSingletonScope();
+container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService).inSingletonScope();
+
+container.bind(TYPES.Database).toConstantValue(db);
 
 // start the server
 let server = new InversifyExpressServer(container);

@@ -21,6 +21,7 @@
     "mysql2": "^3.6.3",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.34.0",
+    "typeorm": "^0.3.17",
     "typescript": "^5.2.2"
   },
   "devDependencies": {

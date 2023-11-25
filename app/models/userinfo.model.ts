@@ -1,16 +1,15 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export class UserInfo extends Model {
+export class Userinfo extends Model {
   public id!: number;
   public email!: string;
   public password!: string;
   public firstName!: string;
   public lastName!: string;
-  public isAdmin!: boolean;
 }
 
-export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
-  UserInfo.init({
+export function initializeUserinfoModel(sequelize: Sequelize): typeof Userinfo {
+  Userinfo.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -33,16 +32,11 @@ export function initializeUserInfoModel(sequelize: Sequelize): typeof UserInfo {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
   }, {
     sequelize,
-    modelName: 'UserInfo',
+    modelName: 'userinfo',
     timestamps: false,
   });
 
-  return UserInfo;
+  return Userinfo;
 }
