@@ -7,14 +7,17 @@ import { StakeholderService } from './service/stakeholder.js';
 import { UserinfoService } from './service/userinfo.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
+import logger from './config/logger.js';
 
 import './controllers/job.js';
+import './controllers/stakeholder.js';
+import './controllers/userinfo.js';
 
 // load everything needed to the Container
 let container = new Container();
-container.bind<JobService>(TYPES.JobService).to(JobService).inSingletonScope();
-container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService).inSingletonScope();
-container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService).inSingletonScope();
+container.bind<JobService>(TYPES.JobService).to(JobService); //.inSingletonScope();
+container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService); //.inSingletonScope();
+container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService); //.inSingletonScope();
 
 container.bind(TYPES.Database).toConstantValue(db);
 
@@ -28,10 +31,10 @@ server.setConfig((app) => {
 
 db.sequelize.sync()
   .then(() => {
-    console.log('Synced db.');
+    logger.info('Synced db.');
   })
   .catch((err: Error) => {
-    console.log('Failed to sync db: ' + err.message);
+    logger.info('Failed to sync db: ' + err.message);
   });
 
 const serverInstance = server.build();
@@ -41,4 +44,4 @@ const port: number = parseInt(portString || '8080', 10);
 
 serverInstance.listen(port);
 
-console.log(`Server started on port ${port} :)`);
+logger.info(`Server started on port ${port} :)`);

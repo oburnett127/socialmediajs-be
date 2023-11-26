@@ -1,8 +1,8 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
-import { StakeholderPayload, StakeholderService } from '../service/stakeholder';
-import { TYPES } from '../service/types';
+import { StakeholderPayload, StakeholderService } from '../service/stakeholder.js';
+import { TYPES } from '../service/types.js';
 
 @controller('/stakeholder')
 export class StakeholderController implements interfaces.Controller {

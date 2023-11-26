@@ -1,8 +1,8 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
-import { UserinfoPayload, UserinfoService } from '../service/userinfo';
-import { TYPES } from '../service/types';
+import { UserinfoPayload, UserinfoService } from '../service/userinfo.js';
+import { TYPES } from '../service/types.js';
 
 @controller('/userinfo')
 export class UserinfoController implements interfaces.Controller {
