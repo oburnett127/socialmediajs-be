@@ -35,7 +35,7 @@ export function initializeUserinfoModel(sequelize: Sequelize): typeof Userinfo {
   }, {
     sequelize,
     modelName: 'userinfo',
-    timestamps: false,
+    timestamps: true,
   });
 
   return Userinfo;

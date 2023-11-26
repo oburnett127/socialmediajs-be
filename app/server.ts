@@ -3,18 +3,13 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from 'inversify';
 import * as express from 'express';
 import { JobService } from './service/job.js';
+import { StakeholderService } from './service/stakeholder.js';
+import { UserinfoService } from './service/userinfo.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
 
 import './controllers/job.js';
 
-// const app: Application = express();
-
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
 // load everything needed to the Container
 let container = new Container();
 container.bind<JobService>(TYPES.JobService).to(JobService).inSingletonScope();
