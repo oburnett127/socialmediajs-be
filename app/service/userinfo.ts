@@ -9,8 +9,29 @@ export interface UserinfoPayload {
   lastName: string;
 }
 
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
 @injectable()
 export class UserinfoService {
+
+  public async login(loginInfo: LoginPayload): Promise<boolean> {
+    return Userinfo.findOne({
+      where: { email: loginInfo.email },
+    })
+      .then((userinfo) => {
+        if (!userinfo) return false;
+        const isValidPassword = loginInfo.password === userinfo.dataValues.password;
+        return isValidPassword;
+      })
+      .catch((err) => {
+        logger.error(err.message);
+        throw err;
+      });
+  }
+  
 
   public async create(userinfo: UserinfoPayload): Promise<Userinfo | void> {
     return Userinfo.create(userinfo as any)
@@ -24,11 +45,18 @@ export class UserinfoService {
       .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
   }
 
-
   public async findOne(id: string): Promise<Userinfo | void> {
     return Userinfo.findByPk(id)
       .then((data: any) => data)
-      .catch((err: any) => console.log(err.message));
+      .catch((err: any) => {logger.error(err.message); throw err; });
+  }
+
+  public async findByEmail(email: string): Promise<Userinfo | void> {
+    return Userinfo.findOne({
+      where: { email: email },
+    })
+    .then((data: any) => data)
+    .catch((err: any) => {logger.error(err.message); throw err; });
   }
 
   public async update(userinfo: UserinfoPayload, id: string): Promise<void | number[]> {

@@ -1,7 +1,7 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
-import { UserinfoPayload, UserinfoService } from '../service/userinfo.js';
+import { UserinfoPayload, LoginPayload, UserinfoService } from '../service/userinfo.js';
 import { TYPES } from '../service/types.js';
 
 @controller('/userinfo')
@@ -10,6 +10,23 @@ export class UserinfoController implements interfaces.Controller {
   constructor(
     @inject(TYPES.UserinfoService) private userinfoService: UserinfoService
   ) { }
+
+  @httpPost('/login')
+  private async login(@request() req: express.Request, @response() res: express.Response): Promise<void> {
+    const loginInfo: LoginPayload = req.body;
+
+    if (!loginInfo) {
+      res.sendStatus(400);
+    }
+
+    const loginUserinfo = await this.userinfoService.login(loginInfo);
+
+    if (loginUserinfo) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(500);
+    }
+  }
 
   @httpPost('/create')
   private async createUserinfo(@request() req: express.Request, @response() res: express.Response): Promise<void> {
@@ -45,6 +62,21 @@ export class UserinfoController implements interfaces.Controller {
     }
 
     const response = await this.userinfoService.findOne(id);
+    if (response) {
+      res.status(200);
+      res.send(response);
+    } else {
+      res.sendStatus(400);
+    }
+  }
+
+  @httpGet('/findByEmail/:email')
+  private async findByEmail(@requestParam('email') email: string, @response() res: express.Response): Promise<void> {
+    if (!email) {
+      res.sendStatus(400);
+    }
+
+    const response = await this.userinfoService.findByEmail(email);
     if (response) {
       res.status(200);
       res.send(response);
