@@ -1,1 +1,6 @@
 {"level":"error","message":""}
+{"level":"error","message":"Truncated incorrect DOUBLE value: '[object Object]'"}
+{"level":"error","message":"Truncated incorrect DOUBLE value: '[object Object]'"}
+{"level":"error","message":"string violation: pictureUrl cannot be an array or an object"}
+{"level":"error","message":"string violation: pictureUrl cannot be an array or an object"}
+{"level":"error","message":"string violation: pictureUrl cannot be an array or an object"}
