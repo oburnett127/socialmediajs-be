@@ -3,14 +3,13 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from 'inversify';
 import express, { Application } from 'express';
 import cors from "cors";
+import passport from '../passport';
 import { JobService } from './service/job.js';
 import { StakeholderService } from './service/stakeholder.js';
 import { UserinfoService } from './service/userinfo.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
 import logger from './config/logger.js';
-
-//const app: Application = express();
 
 // load everything needed to the Container
 let container = new Container();
@@ -31,6 +30,7 @@ server.setConfig((app) => {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   }));
+  app.use(passport.initialize());
 });
 
 import './controllers/job.js';

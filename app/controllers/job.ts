@@ -1,6 +1,7 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
+import * as passport from 'passport';
 import { JobPayload, JobService } from '../service/job.js';
 import { TYPES } from '../service/types.js';
 
@@ -11,7 +12,7 @@ export class JobController implements interfaces.Controller {
     @inject(TYPES.JobService) private jobService: JobService
   ) { }
 
-  @httpPost('/create')
+  @httpPost('/create', passport.authenticate('jwt', { session: false}))
   private async createJob(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const job: JobPayload = req.body;
 
@@ -53,7 +54,7 @@ export class JobController implements interfaces.Controller {
     }
   }
 
-  @httpPut('/update/:id')
+  @httpPut('/update/:id', passport.authenticate('jwt', { session: false}))
   private async update(@requestParam('id') id: string, @request() req: express.Request, @response() res: express.Response): Promise<void> {
     const job: JobPayload = req.body; 
     if (!job || !id) {
@@ -68,7 +69,7 @@ export class JobController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteJob/:id')
+  @httpDelete('/deleteJob/:id', passport.authenticate('jwt', { session: false}))
   private async deleteJob(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
     if (!id) {
       res.sendStatus(400);
@@ -82,7 +83,7 @@ export class JobController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteAll')
+  @httpDelete('/deleteAll', passport.authenticate('jwt', { session: false}))
   private async deleteAll(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const response = await this.jobService.deleteAll();
     if (response) {

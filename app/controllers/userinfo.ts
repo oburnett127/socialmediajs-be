@@ -1,6 +1,8 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
+import * as passport from 'passport';
+import jwt from 'jsonwebtoken';
 import { UserinfoPayload, LoginPayload, UserinfoService } from '../service/userinfo.js';
 import { TYPES } from '../service/types.js';
 
@@ -22,13 +24,16 @@ export class UserinfoController implements interfaces.Controller {
     const loginUserinfo = await this.userinfoService.login(loginInfo);
 
     if (loginUserinfo) {
-      res.sendStatus(200);
+      const token = jwt.sign({ sub: loginInfo.email }, process.env.JWT_SECRET, {
+        expiresIn: '1h'
+      });
+      res.sendStatus(200).json({token});
     } else {
       res.sendStatus(500);
     }
   }
 
-  @httpPost('/create')
+  @httpPost('/create', passport.authenticate('jwt', { session: false}))
   private async createUserinfo(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const userinfo: UserinfoPayload = req.body;
 
@@ -85,7 +90,7 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpPut('/update/:id')
+  @httpPut('/update/:id', passport.authenticate('jwt', { session: false}))
   private async update(@requestParam('id') id: string, @request() req: express.Request, @response() res: express.Response): Promise<void> {
     const userinfo: UserinfoPayload = req.body; 
     if (!userinfo || !id) {
@@ -100,7 +105,7 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteUserinfo/:id')
+  @httpDelete('/deleteUserinfo/:id', passport.authenticate('jwt', { session: false}))
   private async deleteUserinfo(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
     if (!id) {
       res.sendStatus(400);
@@ -114,7 +119,7 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteAll')
+  @httpDelete('/deleteAll', passport.authenticate('jwt', { session: false}))
   private async deleteAll(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const response = await this.userinfoService.deleteAll();
     if (response) {
