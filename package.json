@@ -24,6 +24,7 @@
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.34.0",
+    "sequelize-typescript": "^2.1.6",
     "typescript": "^5.2.2",
     "winston": "^3.11.0"
   },

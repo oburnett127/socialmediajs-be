@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import { Userinfo } from '../models/userinfo.model.js';
 import logger from '../config/logger.js';
+import { RefreshToken } from '../models/refreshtoken.model.js';
 
 export interface UserinfoPayload {
   email: string;
@@ -12,6 +13,12 @@ export interface UserinfoPayload {
 export interface LoginPayload {
   email: string;
   password: string;
+}
+
+interface RefreshTokenPayload {
+  token: string;
+  email: string;
+  expiryDate: Date;
 }
 
 @injectable()
@@ -32,12 +39,25 @@ export class UserinfoService {
       });
   }
   
-
   public async create(userinfo: UserinfoPayload): Promise<Userinfo | void> {
     return Userinfo.create(userinfo as any)
       .then((data: any) => data)
       .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
   }
+
+  public async saveRefreshToken(refreshTokenPayload: RefreshTokenPayload): Promise<void> {
+    try {
+        await RefreshToken.create({
+            token: refreshTokenPayload.token,
+            email: refreshTokenPayload.email,
+            expiryDate: refreshTokenPayload.expiryDate
+        });
+    } catch (error) {
+        console.error("Error saving refresh token:", error);
+        throw new Error("Could not save refresh token.");
+    }
+}
+
 
   public async findAll(): Promise<Userinfo[] | void> {
     return Userinfo.findAll()

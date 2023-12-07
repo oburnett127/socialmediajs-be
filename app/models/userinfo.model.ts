@@ -1,42 +1,35 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import {
+  Model,
+  Table,
+  Column,
+  DataType
+} from 'sequelize-typescript';
 
-export class Userinfo extends Model {
-  public id!: number;
-  public email!: string;
-  public password!: string;
-  public firstName!: string;
-  public lastName!: string;
-}
+@Table
+export class Userinfo extends Model<Userinfo> {
 
-export function initializeUserinfoModel(sequelize: Sequelize): typeof Userinfo {
-  Userinfo.init({
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
-    firstName: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-  }, {
-    sequelize,
-    modelName: 'Userinfo',
-    timestamps: true,
-  });
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: false
+  })
+  email!: string;
 
-  return Userinfo;
+  @Column({
+    type: DataType.STRING(50),
+    allowNull: false
+  })
+  password!: string;
+
+  @Column({
+    type: DataType.STRING(20),
+    allowNull: false
+  })
+  firstName!: string;
+
+  @Column({
+    type: DataType.STRING(20),
+    allowNull: false
+  })
+  lastName!: string;
+
 }
