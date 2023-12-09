@@ -1,19 +1,25 @@
+import { Userinfo } from 'UserinfoModule';
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET, // Define this in your .env file
+  secretOrKey: process.env.JWT_SECRET, // Ensure this is defined in your .env file
 };
 
 passport.use(new JwtStrategy(options, (jwt_payload, done) => {
-  // Here, you would find your user based on the JWT payload
-  // For example, User.findById(jwt_payload.sub)...
-  // If user is found and verified:
-  done(null, user);
-  // Otherwise:
-  done(null, false);
-  // You can also add more checks and error handling
+  Userinfo.findByPk(jwt_payload.sub).then((user: Userinfo | null) => {
+    if (user) {
+      // If user is found:
+      done(null, user);
+    } else {
+      // If no user is found:
+      done(null, false);
+    }
+  }).catch((err: Error) => {
+    // Error handling
+    done(err, false);
+  });
 }));
 
 export default passport;

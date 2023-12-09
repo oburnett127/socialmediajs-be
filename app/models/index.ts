@@ -1,30 +1,17 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 import dbConfig from "../config/db.config.js";
-import { initializeJobModel } from "./job.model.js";
-import { initializeStakeholderModel } from "./stakeholder.model.js";
-import { initializeUserinfoModel } from "./userinfo.model.js";
+import { Job } from "./job.model.js";
+import { Stakeholder } from "./stakeholder.model.js";
+import { Userinfo } from "./userinfo.model.js";
+import { RefreshToken } from "./refreshtoken.model.js";
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize({
+  database: dbConfig.DB,
+  username: dbConfig.USER,
+  password: dbConfig.PASSWORD,
   host: dbConfig.HOST,
   dialect: 'mysql',
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
-  }
+ //models: [Userinfo, Job, Stakeholder, RefreshToken],
 });
 
-const Job = initializeJobModel(sequelize);
-const Stakeholder = initializeStakeholderModel(sequelize);
-const Userinfo = initializeUserinfoModel(sequelize);
-
-const db = {
-  sequelize,
-  Sequelize,
-  jobs: Job,
-  stakeholder: Stakeholder,
-  userinfo: Userinfo,
-};
-
-export default db;
+export default sequelize;

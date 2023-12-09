@@ -1,40 +1,33 @@
 import {
   Model,
-  DataTypes,
-  Sequelize
-} from 'sequelize';
+  Table,
+  Column,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+} from 'sequelize-typescript';
 
-export class Stakeholder extends Model {
-  public id!: number;
-  public firstName!: string;
-  public lastName!: string;
-  public pictureUrl?: string;
-}
+@Table
+export class Stakeholder extends Model<Stakeholder> {
 
-export function initializeStakeholderModel(sequelize: Sequelize): typeof Stakeholder {
-  Stakeholder.init({
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    firstName: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    pictureUrl: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-  }, {
-    sequelize,
-    modelName: 'Stakeholder',
-    timestamps: true,
-  });
+  @PrimaryKey
+  @AutoIncrement
+  @Column(DataType.INTEGER.UNSIGNED)
+  declare id: number;
 
-  return Stakeholder;
+  @Column({
+    type: DataType.STRING(20),
+    allowNull: false
+  })
+  firstName!: string;
+
+  @Column({
+    type: DataType.STRING(20),
+    allowNull: false
+  })
+  lastName!: string;
+
+  @Column(DataType.TEXT)
+  pictureUrl?: string;
+
 }

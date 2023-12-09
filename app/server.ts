@@ -10,6 +10,8 @@ import { UserinfoService } from './service/userinfo.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
 import logger from './config/logger.js';
+import sequelize from './models/index';
+import 'dotenv/config';
 
 // load everything needed to the Container
 let container = new Container();
@@ -37,12 +39,14 @@ import './controllers/job.js';
 import './controllers/stakeholder.js';
 import './controllers/userinfo.js';
 
-db.sequelize.sync()
-  .then(() => {
-    logger.info('Synced db.');
-  })
-  .catch((err: Error) => {
-    logger.info('Failed to sync db: ' + err.message);
+sequelize.sync()
+  .then(() => console.log('Database synchronized'))
+  .catch((err: unknown) => {
+    if (err instanceof Error) {
+      console.error('Failed to synchronize database:', err.message);
+    } else {
+      console.error('Failed to synchronize database:', err);
+    }
   });
 
 const serverInstance = server.build();

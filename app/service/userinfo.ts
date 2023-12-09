@@ -17,7 +17,13 @@ export interface LoginPayload {
 
 interface RefreshTokenPayload {
   token: string;
-  email: string;
+  userId: number;
+  expiryDate: Date;
+}
+
+interface RefreshTokenCreationAttributes {
+  token: string;
+  userId: number;
   expiryDate: Date;
 }
 
@@ -47,17 +53,17 @@ export class UserinfoService {
 
   public async saveRefreshToken(refreshTokenPayload: RefreshTokenPayload): Promise<void> {
     try {
-        await RefreshToken.create({
+        const payload: RefreshTokenCreationAttributes = {
             token: refreshTokenPayload.token,
-            email: refreshTokenPayload.email,
+            userId: refreshTokenPayload.userId,
             expiryDate: refreshTokenPayload.expiryDate
-        });
+        };
+        await RefreshToken.create(payload as any);
     } catch (error) {
         console.error("Error saving refresh token:", error);
         throw new Error("Could not save refresh token.");
     }
 }
-
 
   public async findAll(): Promise<Userinfo[] | void> {
     return Userinfo.findAll()

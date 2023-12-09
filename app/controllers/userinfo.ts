@@ -24,10 +24,17 @@ export class UserinfoController implements interfaces.Controller {
     const loginUserinfo = await this.userinfoService.login(loginInfo);
 
     if (loginUserinfo) {
-      const token = jwt.sign({ sub: loginInfo.email }, process.env.JWT_SECRET, {
+
+      if (!process.env.JWT_SECRET) {
+        console.error("JWT secret is undefined");
+        res.sendStatus(500);
+        return;
+      }
+
+      const token = jwt.sign({ sub: req.body.id }, process.env.JWT_SECRET, {
         expiresIn: '1h'
       });
-      res.sendStatus(200).json({token});
+      res.status(200).json({ token: token });
     } else {
       res.sendStatus(500);
     }

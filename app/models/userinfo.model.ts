@@ -2,11 +2,18 @@ import {
   Model,
   Table,
   Column,
-  DataType
+  DataType,
+  PrimaryKey,
+  AutoIncrement
 } from 'sequelize-typescript';
 
 @Table
 export class Userinfo extends Model<Userinfo> {
+
+  @PrimaryKey
+  @AutoIncrement
+  @Column(DataType.INTEGER.UNSIGNED)
+  declare id: number;
 
   @Column({
     type: DataType.STRING(50),
