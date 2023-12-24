@@ -11,7 +11,7 @@ const sequelize = new Sequelize({
   password: dbConfig.PASSWORD,
   host: dbConfig.HOST,
   dialect: 'mysql',
- //models: [Userinfo, Job, Stakeholder, RefreshToken],
+  models: [Userinfo, Job, Stakeholder, RefreshToken],
 });
 
 export default sequelize;

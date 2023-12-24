@@ -38,5 +38,4 @@ export class Userinfo extends Model<Userinfo> {
     allowNull: false
   })
   lastName!: string;
-
 }

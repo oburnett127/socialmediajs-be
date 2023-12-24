@@ -1,27 +1,25 @@
+import 'dotenv/config';
 import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from 'inversify';
-import express, { Application } from 'express';
+import express from 'express';
 import cors from "cors";
-import passport from '../passport';
+import passport from '../passportext.js';
 import { JobService } from './service/job.js';
 import { StakeholderService } from './service/stakeholder.js';
 import { UserinfoService } from './service/userinfo.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
 import logger from './config/logger.js';
-import sequelize from './models/index';
-import 'dotenv/config';
+import sequelize from './models/index.js';
 
-// load everything needed to the Container
 let container = new Container();
-container.bind<JobService>(TYPES.JobService).to(JobService); //.inSingletonScope();
-container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService); //.inSingletonScope();
-container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService); //.inSingletonScope();
+container.bind<JobService>(TYPES.JobService).to(JobService);
+container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService);
+container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService);
 
 container.bind(TYPES.Database).toConstantValue(db);
 
-// start the server
 let server = new InversifyExpressServer(container);
 
 server.setConfig((app) => {

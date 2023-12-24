@@ -1,5 +1,5 @@
 import { Model, Table, Column, PrimaryKey, ForeignKey, BelongsTo, DataType, AutoIncrement } from 'sequelize-typescript';
-import { Userinfo } from './userinfo.model';
+import { Userinfo } from './userinfo.model.js';
 
 @Table
 export class RefreshToken extends Model<RefreshToken> {
@@ -8,16 +8,24 @@ export class RefreshToken extends Model<RefreshToken> {
     @Column(DataType.INTEGER.UNSIGNED)
     declare id: number;
    
-    @Column
+    // Explicitly specify the data type for the token
+    @Column(DataType.STRING)
     token!: string;
 
     @ForeignKey(() => Userinfo)
-    @Column(DataType.INTEGER.UNSIGNED)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        references: {
+         model: Userinfo,
+         key: 'id'
+        }
+    })
     userId!: number;
 
     @BelongsTo(() => Userinfo, 'userId')
     userinfo!: Userinfo;
 
-    @Column
+    // Explicitly specify the data type for the expiryDate
+    @Column(DataType.DATE)
     expiryDate!: Date;
 }

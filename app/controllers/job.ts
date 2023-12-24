@@ -1,9 +1,10 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
-import * as passport from 'passport';
+import localPassport from '../../passportext.js';
 import { JobPayload, JobService } from '../service/job.js';
 import { TYPES } from '../service/types.js';
+import logger from '../config/logger.js';
 
 @controller('/job')
 export class JobController implements interfaces.Controller {
@@ -12,7 +13,7 @@ export class JobController implements interfaces.Controller {
     @inject(TYPES.JobService) private jobService: JobService
   ) { }
 
-  @httpPost('/create', passport.authenticate('jwt', { session: false}))
+  @httpPost('/create', localPassport.authenticate('jwt', { session: false}))
   private async createJob(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const job: JobPayload = req.body;
 
@@ -30,6 +31,9 @@ export class JobController implements interfaces.Controller {
 
   @httpGet('/findAll')
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
+    logger.info("abc123");
+    console.log("abc123");
+
     const response = await this.jobService.findAll();
     if (response) {
       res.status(200)
@@ -54,7 +58,7 @@ export class JobController implements interfaces.Controller {
     }
   }
 
-  @httpPut('/update/:id', passport.authenticate('jwt', { session: false}))
+  @httpPut('/update/:id', localPassport.authenticate('jwt', { session: false}))
   private async update(@requestParam('id') id: string, @request() req: express.Request, @response() res: express.Response): Promise<void> {
     const job: JobPayload = req.body; 
     if (!job || !id) {
@@ -69,7 +73,7 @@ export class JobController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteJob/:id', passport.authenticate('jwt', { session: false}))
+  @httpDelete('/deleteJob/:id', localPassport.authenticate('jwt', { session: false}))
   private async deleteJob(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
     if (!id) {
       res.sendStatus(400);
@@ -83,7 +87,7 @@ export class JobController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteAll', passport.authenticate('jwt', { session: false}))
+  @httpDelete('/deleteAll', localPassport.authenticate('jwt', { session: false}))
   private async deleteAll(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const response = await this.jobService.deleteAll();
     if (response) {

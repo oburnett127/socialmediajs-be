@@ -1,9 +1,10 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import * as express from 'express';
-import * as passport from 'passport';
+import localPassport from '../../passportext.js';
 import { StakeholderPayload, StakeholderService } from '../service/stakeholder.js';
 import { TYPES } from '../service/types.js';
+import logger from '../config/logger.js';
 
 @controller('/stakeholder')
 export class StakeholderController implements interfaces.Controller {
@@ -12,7 +13,7 @@ export class StakeholderController implements interfaces.Controller {
     @inject(TYPES.StakeholderService) private stakeholderService: StakeholderService
   ) { }
 
-  @httpPost('/create', passport.authenticate('jwt', { session: false}))
+  @httpPost('/create', localPassport.authenticate('jwt', { session: false}))
   private async createStakeholder(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const stakeholder: StakeholderPayload = req.body;
 
@@ -54,7 +55,7 @@ export class StakeholderController implements interfaces.Controller {
     }
   }
 
-  @httpPut('/update/:id', passport.authenticate('jwt', { session: false}))
+  @httpPut('/update/:id', localPassport.authenticate('jwt', { session: false}))
   private async update(@requestParam('id') id: string, @request() req: express.Request, @response() res: express.Response): Promise<void> {
     const stakeholder: StakeholderPayload = req.body; 
     if (!stakeholder || !id) {
@@ -69,7 +70,7 @@ export class StakeholderController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteStakeholder/:id', passport.authenticate('jwt', { session: false}))
+  @httpDelete('/deleteStakeholder/:id', localPassport.authenticate('jwt', { session: false}))
   private async deleteStakeholder(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
     if (!id) {
       res.sendStatus(400);
@@ -83,7 +84,7 @@ export class StakeholderController implements interfaces.Controller {
     }
   }
 
-  @httpDelete('/deleteAll', passport.authenticate('jwt', { session: false}))
+  @httpDelete('/deleteAll', localPassport.authenticate('jwt', { session: false}))
   private async deleteAll(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const response = await this.stakeholderService.deleteAll();
     if (response) {

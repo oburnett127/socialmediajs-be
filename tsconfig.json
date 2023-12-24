@@ -2,7 +2,7 @@
   "compilerOptions": {
       "module": "ESNext",
       "target": "ESNext",
-      "moduleResolution": "node",
+      "moduleResolution": "Node",
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
       "noImplicitAny": true,
@@ -15,9 +15,7 @@
       "outDir": "dist",
       "baseUrl": ".",
       "paths": {
-          "*": [
-              "node_modules/*",
-          ]
+        "UserinfoModule": ["./app/userinfo.d.ts"]
       }
   },
   "include": [
