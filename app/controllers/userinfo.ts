@@ -57,11 +57,18 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const createUserinfo = await this.userinfoService.create(userinfo);
-    if (createUserinfo) {
-      res.sendStatus(200);
+    const response = await this.userinfoService.findByEmail(userinfo.email);
+    
+    if (response) {
+      res.sendStatus(409);
     } else {
-      res.sendStatus(500);
+      const createUserinfo = await this.userinfoService.create(userinfo);
+      
+      if (createUserinfo) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(500);
+      }  
     }
   }
 
