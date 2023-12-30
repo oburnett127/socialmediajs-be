@@ -8,7 +8,7 @@ import {
 } from 'sequelize-typescript';
 
 @Table
-export class Stakeholder extends Model<Stakeholder> {
+export class Stakeholder extends Model {
 
   @PrimaryKey
   @AutoIncrement

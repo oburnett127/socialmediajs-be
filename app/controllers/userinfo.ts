@@ -2,10 +2,38 @@ import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request
 import { inject } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
-import jwt from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
 import { UserinfoPayload, LoginPayload, UserinfoService } from '../service/userinfo.js';
 import { TYPES } from '../service/types.js';
 import logger from '../config/logger.js';
+import { RefreshToken } from '../models/refreshtoken.model.js';
+import { Userinfo } from 'app/models/userinfo.model.js';
+
+const generateAccessToken = (user: any) => {
+  if(!user) {
+    throw new Error('User is undefined');
+  }
+  
+  return jwt.sign({sub: user}, process.env.ACCESS_TOKEN_SECRET as Secret, { expiresIn: '15m' });
+};
+
+const generateRefreshToken = async (user: any) => {
+  if(!user) {
+    throw new Error('User is undefined');
+  }
+
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET as Secret, { expiresIn: '7d' });
+  const expiryDate = new Date();
+  expiryDate.setDate(expiryDate.getDate() + 7);
+
+  await RefreshToken.create({
+    token: refreshToken,
+    userId: user.id,
+    expiryDate: expiryDate,
+  });
+
+  return refreshToken;
+};
 
 @controller('/userinfo')
 export class UserinfoController implements interfaces.Controller {
@@ -28,21 +56,22 @@ export class UserinfoController implements interfaces.Controller {
       const userAuthorized = await this.userinfoService.login(loginInfo);
   
       if (!userAuthorized || !userInfo) {
-        res.sendStatus(401); // Unauthorized or user not found
+        res.sendStatus(401);
         return;
       }
   
-      if (!process.env.JWT_SECRET) {
+      if (!process.env.ACCESS_TOKEN_SECRET || !process.env.REFRESH_TOKEN_SECRET) {
         logger.error("JWT secret is undefined");
         res.sendStatus(500);
         return;
       }
   
-      const token = jwt.sign({ sub: userInfo.id }, process.env.JWT_SECRET, {
-        expiresIn: '1h'
-      });
+      const user = { id: userInfo.id, email: userInfo.email, password: userInfo.password, 
+                      firstName: userInfo.firstName, lastName: userInfo.lastName }
+      const accessToken = generateAccessToken(user);
+      const refreshToken = await generateRefreshToken(user);
   
-      res.status(200).json({ token: token });
+      res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       logger.error("Login error:", error);
       res.sendStatus(500);

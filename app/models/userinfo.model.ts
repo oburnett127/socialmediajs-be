@@ -8,7 +8,7 @@ import {
 } from 'sequelize-typescript';
 
 @Table
-export class Userinfo extends Model<Userinfo> {
+export class Userinfo extends Model {
 
   @PrimaryKey
   @AutoIncrement
