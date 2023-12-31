@@ -9,26 +9,30 @@ import logger from '../config/logger.js';
 import { RefreshToken } from '../models/refreshtoken.model.js';
 import { Userinfo } from 'app/models/userinfo.model.js';
 
-const generateAccessToken = (user: any) => {
-  if(!user) {
-    throw new Error('User is undefined');
+const generateAccessToken = (userId: number) => {
+  if(!userId) {
+    throw new Error('userId is undefined');
   }
   
-  return jwt.sign({sub: user}, process.env.ACCESS_TOKEN_SECRET as Secret, { expiresIn: '15m' });
-};
-
-const generateRefreshToken = async (user: any) => {
-  if(!user) {
-    throw new Error('User is undefined');
+  if (!process.env.ACCESS_TOKEN_SECRET || typeof process.env.ACCESS_TOKEN_SECRET !== 'string') {
+    throw new Error('Invalid or missing ACCESS_TOKEN_SECRET');
   }
 
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET as Secret, { expiresIn: '7d' });
+  return jwt.sign({sub: userId}, process.env.ACCESS_TOKEN_SECRET as Secret, { expiresIn: '15m' });
+};
+
+const generateRefreshToken = async (userId: number) => {
+  if(!userId) {
+    throw new Error('userId is undefined');
+  }
+
+  const refreshToken = jwt.sign({sub: userId}, process.env.REFRESH_TOKEN_SECRET as Secret, { expiresIn: '7d' });
   const expiryDate = new Date();
   expiryDate.setDate(expiryDate.getDate() + 7);
 
   await RefreshToken.create({
     token: refreshToken,
-    userId: user.id,
+    userId: userId,
     expiryDate: expiryDate,
   });
 
@@ -68,8 +72,8 @@ export class UserinfoController implements interfaces.Controller {
   
       const user = { id: userInfo.id, email: userInfo.email, password: userInfo.password, 
                       firstName: userInfo.firstName, lastName: userInfo.lastName }
-      const accessToken = generateAccessToken(user);
-      const refreshToken = await generateRefreshToken(user);
+      const accessToken = generateAccessToken(userInfo.id);
+      const refreshToken = await generateRefreshToken(userInfo.id);
   
       res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
@@ -99,6 +103,27 @@ export class UserinfoController implements interfaces.Controller {
         res.sendStatus(500);
       }  
     }
+  }
+
+  @httpPost('/token')
+  private async getAccessToken(@request() req: express.Request, @response() res: express.Response): Promise<void> {
+    const { refreshToken, userId } = req.body;
+
+    if (!refreshToken) {
+      res.sendStatus(401);
+      return;
+    }
+    
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as Secret, (err: any) => {
+      if (err) {
+        res.sendStatus(403);
+        return;
+      }
+
+      const newAccessToken = generateAccessToken(userId);
+
+      res.json({ accessToken: newAccessToken });
+    });
   }
 
   @httpGet('/findAll')

@@ -7,17 +7,17 @@ const options = {
   secretOrKey: process.env.ACCESS_TOKEN_SECRET,
 };
 
+console.log(options.jwtFromRequest);
+
 passport.use(new JwtStrategy(options, (jwt_payload, done) => {
   Userinfo.findByPk(jwt_payload.sub).then((user: Userinfo | null) => {
+
     if (user) {
-      // If user is found:
       done(null, user);
     } else {
-      // If no user is found:
       done(null, false);
     }
   }).catch((err: Error) => {
-    // Error handling
     done(err, false);
   });
 }));
