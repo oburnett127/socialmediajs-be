@@ -16,13 +16,13 @@ export class Stakeholder extends Model {
   declare id: number;
 
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING(25),
     allowNull: false
   })
   firstName!: string;
 
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING(25),
     allowNull: false
   })
   lastName!: string;
