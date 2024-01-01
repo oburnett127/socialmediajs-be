@@ -1,13 +1,21 @@
-import {
-  Model,
-  Table,
-  Column,
-  DataType,
-  PrimaryKey,
-  AutoIncrement
-} from 'sequelize-typescript';
+import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany, ForeignKey } from 'sequelize-typescript';
+import { Product } from './product.model.js';
+import { Userinfo } from './userinfo.model.js';
 
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+enum CartStatus {
+  OPEN = "open",
+  CLOSED = "closed",
+}
+
+interface ShippingInfo {
+  address: string;
+  shippingMethod: string;
+}
+
+interface TaxInfo {
+  rate: number;
+  amount: number;
+}
 
 @Table
 export class Cart extends Model {
@@ -17,17 +25,16 @@ export class Cart extends Model {
   @Column(DataType.INTEGER.UNSIGNED)
   private declare cartId: number;
 
+  @ForeignKey(() => Userinfo)
   @Column({
     type: DataType.INTEGER.UNSIGNED,
     allowNull: false
   })
-  private userId!: string;
+  private userId!: number;
 
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: false
-  })
-  private cartProducts!: string;
+  @Column({ allowNull: false })
+  @HasMany(() => Product)
+  private cartProducts!: Product[];
 
   @Column({
     type: DataType.DECIMAL(10, 2),
@@ -41,27 +48,15 @@ export class Cart extends Model {
   })
   private total!: number;
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true
-  })
-  private shippingAddress!: number;
+  @Column({ allowNull: true })
+  private shippingInfo!: ShippingInfo;
 
-private shippingMethod:
+  @Column({ allowNull: true })
+  private taxInfo!: TaxInfo;
 
-private taxRate:
+  @Column({ allowNull: false })
+  private cartStatus!: CartStatus;
 
-private taxAmount:
-
-private createdAt:
-
-private updatedAt:
-
-private cartStatus:
-
-    sessionId:
-
-
-
+  //private sessionId: number;
 
 }

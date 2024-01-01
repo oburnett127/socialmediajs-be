@@ -31,9 +31,6 @@ export class JobController implements interfaces.Controller {
 
   @httpGet('/findAll')
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
-    logger.info("abc123");
-    console.log("abc123");
-
     const response = await this.jobService.findAll();
     if (response) {
       res.status(200)

@@ -6,9 +6,10 @@ import {
   PrimaryKey,
   AutoIncrement
 } from 'sequelize-typescript';
+import { Product } from './product.model';
 
 @Table
-export class Product extends Model {
+export class CartItem extends Model {
 
   @PrimaryKey
   @AutoIncrement
@@ -18,6 +19,12 @@ export class Product extends Model {
   @Column({
     type: DataType.STRING(50),
     allowNull: false
+  })
+  private quantity!: number;
+
+  @Column({
+    type: DataType.STRING(100),
+    allowNull: true
   })
   private name!: string;
 
@@ -31,20 +38,12 @@ export class Product extends Model {
     type: DataType.DECIMAL(10, 2),
     allowNull: false
   })
-  private unitPrice!: number;
-
   private imageUrl!: string;
 
   private category!: string;
 
-  private stockQuantity!: number;
+  private totalPrice!: number;
 
-  private manufacturer!: string;
-
-  private rating!:
-
-  private reviews!:
-
-  private isFeatured!: boolean;
+  private product!: Product;
 
 }

@@ -4,6 +4,8 @@ import { Job } from "./job.model.js";
 import { Stakeholder } from "./stakeholder.model.js";
 import { Userinfo } from "./userinfo.model.js";
 import { RefreshToken } from "./refreshtoken.model.js";
+import { Cart } from "./cart.model.js";
+import { Product } from "./product.model.js";
 
 const sequelize = new Sequelize({
   database: dbConfig.DB,
@@ -11,7 +13,7 @@ const sequelize = new Sequelize({
   password: dbConfig.PASSWORD,
   host: dbConfig.HOST,
   dialect: 'mysql',
-  models: [Userinfo, Job, Stakeholder, RefreshToken],
+  models: [Userinfo, Job, Stakeholder, RefreshToken, Product, Cart],
 });
 
 export default sequelize;
