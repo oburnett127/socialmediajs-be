@@ -1,25 +1,21 @@
-import {
-  Model,
-  Table,
-  Column,
-  DataType,
-  PrimaryKey,
-  AutoIncrement
-} from 'sequelize-typescript';
-import { Product } from './product.model';
+import { Model, Table, Column, DataType, PrimaryKey, ForeignKey } from 'sequelize-typescript';
+import { Product } from './product.model.js';
+import { Cart } from './cart.model.js';
 
 @Table
 export class CartProduct extends Model {
 
   @PrimaryKey
-  @AutoIncrement
-  @Column(DataType.INTEGER.UNSIGNED)
-  declare private productId: number;
+  @ForeignKey(() => Product)
+  @Column({ type: DataType.INTEGER.UNSIGNED })
+  declare productId: number;
 
-  @Column({
-    type: DataType.STRING(50),
-    allowNull: false
-  })
+  @PrimaryKey
+  @ForeignKey(() => Cart)
+  @Column({ type: DataType.INTEGER.UNSIGNED })
+  cartId!: number;
+
+  @Column({ type: DataType.INTEGER.UNSIGNED })
   private quantity!: number;
 
   @Column({

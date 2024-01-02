@@ -1,30 +1,22 @@
-import {
-  Model,
-  Table,
-  Column,
-  DataType,
-  PrimaryKey,
-  AutoIncrement,
-  ForeignKey
-} from 'sequelize-typescript';
-import { Product } from './product.model';
-import { Order } from './order.model';
+import { Model, Table, Column, PrimaryKey, AutoIncrement, ForeignKey, DataType } from 'sequelize-typescript';
+import { Product } from './product.model.js';
+import { Order } from './order.model.js';
 
 @Table
 export class OrderProduct extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column
+  @Column({ type: DataType.INTEGER.UNSIGNED })
   declare id: number;
 
   @PrimaryKey
   @ForeignKey(() => Order)
-  @Column
+  @Column({ type: DataType.INTEGER.UNSIGNED })
   private orderId!: number;
 
   @ForeignKey(() => Product)
-  @Column
+  @Column({ type: DataType.INTEGER.UNSIGNED })
   private productId!: number;
 
   @Column

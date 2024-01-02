@@ -8,6 +8,7 @@ import passport from '../passportext.js';
 import { JobService } from './service/job.js';
 import { StakeholderService } from './service/stakeholder.js';
 import { UserinfoService } from './service/userinfo.js';
+import { ProductService } from './service/product.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
 import logger from './config/logger.js';
@@ -17,6 +18,7 @@ let container = new Container();
 container.bind<JobService>(TYPES.JobService).to(JobService);
 container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService);
 container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService);
+container.bind<ProductService>(TYPES.ProductService).to(ProductService);
 
 container.bind(TYPES.Database).toConstantValue(db);
 
@@ -36,6 +38,7 @@ server.setConfig((app) => {
 import './controllers/job.js';
 import './controllers/stakeholder.js';
 import './controllers/userinfo.js';
+import './controllers/product.js';
 
 sequelize.sync()
   .then(() => console.log('Database synchronized'))

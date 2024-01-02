@@ -1,11 +1,4 @@
-import {
-  Model,
-  Table,
-  Column,
-  DataType,
-  PrimaryKey,
-  AutoIncrement,
-} from 'sequelize-typescript';
+import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
 
 @Table
 export class Stakeholder extends Model {

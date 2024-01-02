@@ -1,6 +1,7 @@
-import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany, ForeignKey } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsToMany } from 'sequelize-typescript';
 import { Product } from './product.model.js';
 import { Userinfo } from './userinfo.model.js';
+import { CartProduct } from './cartproduct.model.js';
 
 enum CartStatus {
   OPEN = "open",
@@ -32,8 +33,7 @@ export class Cart extends Model {
   })
   private userId!: number;
 
-  @Column({ allowNull: false })
-  @HasMany(() => Product)
+  @BelongsToMany(() => Product, () => CartProduct)
   private cartProducts!: Product[];
 
   @Column({
@@ -48,13 +48,10 @@ export class Cart extends Model {
   })
   private total!: number;
 
-  @Column({ allowNull: true })
   private shippingInfo!: ShippingInfo;
 
-  @Column({ allowNull: true })
   private taxInfo!: TaxInfo;
 
-  @Column({ allowNull: false })
   private cartStatus!: CartStatus;
 
   //private sessionId: number;

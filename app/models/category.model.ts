@@ -1,18 +1,11 @@
-import {
-  Model,
-  Table,
-  Column,
-  DataType,
-  PrimaryKey,
-  AutoIncrement
-} from 'sequelize-typescript';
+import { Model, Table, Column, PrimaryKey, AutoIncrement, DataType } from 'sequelize-typescript';
 
 @Table
 export class Category extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column
+  @Column({ type: DataType.INTEGER.UNSIGNED })
   declare id: number;
 
   @Column
