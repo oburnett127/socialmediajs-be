@@ -1,5 +1,6 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany, ForeignKey } from 'sequelize-typescript';
 import { Userinfo } from './userinfo.model';
+import { OrderProduct } from './orderproduct.model';
 
 @Table
 export class Order extends Model {
@@ -20,6 +21,7 @@ export class Order extends Model {
   @HasMany(() => OrderProduct)
   private products!: OrderProduct[];
 
+  @Column
   private totalPrice!: number;
 
   @Column({ allowNull: true })
@@ -30,24 +32,6 @@ export class Order extends Model {
 
   @Column({ allowNull: false })
   private orderStatus!: string;
-
-}
-
-class OrderProduct {
-  
-  private id!: string;
-
-  private productName!: string;
-
-  private quantity!: number;
-
-  private unitPrice!: number;
-
-  private totalPrice!: number;
-
-  private additionalInfo!: string;
-
-  private createdAt!: Date;
 
 }
 

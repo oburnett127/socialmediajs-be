@@ -35,16 +35,10 @@ export class Product extends Model {
 
   private imageUrl!: string;
 
-  private category!: string;
+  private category!: Category;
 
   private stockQuantity!: number;
 
   private manufacturer!: string;
-
-  private rating!:
-
-  private reviews!:
-
-  private isFeatured!: boolean;
 
 }

@@ -9,7 +9,7 @@ import {
 import { Product } from './product.model';
 
 @Table
-export class CartItem extends Model {
+export class CartProduct extends Model {
 
   @PrimaryKey
   @AutoIncrement
@@ -44,6 +44,6 @@ export class CartItem extends Model {
 
   private totalPrice!: number;
 
-  private product!: Product;
+  //private product!: Product;
 
 }
