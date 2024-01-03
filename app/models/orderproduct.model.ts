@@ -19,13 +19,19 @@ export class OrderProduct extends Model {
   @Column({ type: DataType.INTEGER.UNSIGNED })
   private productId!: number;
 
-  @Column
+  @Column({ type: DataType.INTEGER.UNSIGNED })
   private quantity!: number;
 
-  @Column
+  @Column({
+    type: DataType.DECIMAL(10, 2),
+    allowNull: false
+  })
   private unitPrice!: number;
 
-  @Column
+  @Column({
+    type: DataType.DECIMAL(10, 2),
+    allowNull: false
+  })
   private totalPrice!: number;
 
 }

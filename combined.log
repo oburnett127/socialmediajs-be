@@ -52,3 +52,5 @@
 {"level":"info","message":"Server started on port 8080 :)"}
 {"level":"error","message":"Data too long for column 'lastName' at row 1"}
 {"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}

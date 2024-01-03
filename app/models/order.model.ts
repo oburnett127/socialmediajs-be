@@ -1,6 +1,6 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany, ForeignKey } from 'sequelize-typescript';
 import { Userinfo } from './userinfo.model.js';
-import { OrderProduct } from './orderproduct.model.js';
+import { OrderProduct } from './orderProduct.model.js';
 import { Address } from './address.model.js';
 
 @Table
@@ -18,20 +18,19 @@ export class Order extends Model {
   })
   private userId!: number;
 
-  @Column({ allowNull: false })
   @HasMany(() => OrderProduct)
   private products!: OrderProduct[];
 
-  @Column
+  @Column({
+    type: DataType.DECIMAL(10, 2),
+    allowNull: false
+  })
   private totalPrice!: number;
 
-  @Column({ allowNull: true })
   private shippingAddress!: Address;
 
-  @Column({ allowNull: true })
   private billingInfo!: BillingInfo;
 
-  @Column({ allowNull: false })
   private orderStatus!: string;
 
 }
@@ -40,6 +39,6 @@ class BillingInfo {
 
   private cardholderName!: string;
 
-  private expirationDate!: string;
+  private expirationDate!: Date;
 
 }

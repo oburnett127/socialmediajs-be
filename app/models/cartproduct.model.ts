@@ -1,6 +1,7 @@
 import { Model, Table, Column, DataType, PrimaryKey, ForeignKey } from 'sequelize-typescript';
 import { Product } from './product.model.js';
 import { Cart } from './cart.model.js';
+import { Category } from './category.model.js';
 
 @Table
 export class CartProduct extends Model {
@@ -30,14 +31,14 @@ export class CartProduct extends Model {
   })
   private description!: string;
 
+  private imageUrl!: string;
+
+  private category!: Category;
+
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false
   })
-  private imageUrl!: string;
-
-  private category!: string;
-
   private totalPrice!: number;
 
   //private product!: Product;

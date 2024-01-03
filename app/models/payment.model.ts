@@ -1,5 +1,7 @@
-import { Model, Table, Column, PrimaryKey, AutoIncrement, DataType } from 'sequelize-typescript';
+import { Model, Table, Column, PrimaryKey, AutoIncrement, DataType, ForeignKey } from 'sequelize-typescript';
 import { Address } from './address.model.js';
+import { Userinfo } from './userinfo.model.js';
+import { Order } from './order.model.js';
 
 @Table
 export class Payment extends Model {
@@ -9,45 +11,49 @@ export class Payment extends Model {
   @Column({ type: DataType.INTEGER.UNSIGNED })
   declare paymentId: number;
 
+  @ForeignKey(() => Order)
   @Column({ type: DataType.INTEGER.UNSIGNED })
   private orderId!: number;
 
+  @ForeignKey(() => Userinfo)
   @Column({ type: DataType.INTEGER.UNSIGNED })
   private userId!: number;
 
-  @Column
   private paymentDate!: Date;
 
-  @Column
+  @Column({
+    type: DataType.DECIMAL(10, 2),
+    allowNull: false
+  })
   private amount!: number;
 
-  @Column
   private paymentMethod!: string;
 
-  @Column
   private transactionId!: string;
 
-  @Column
-  private status!: number;
+  private status!: PaymentStatus;
 
-  @Column
   private paymentGateway!: string;
 
-  @Column
   private billingAddress!: Address;
 
-  @Column
   private paymentDetails!: Record<string, any>;
 
-  @Column
   private currency!: string;
 
-  @Column
   private notes!: string;
 
-  @Column
   private paymentSource!: PaymentSource;
 
+}
+
+enum PaymentStatus {
+  Pending = 'Pending',
+  Authorized = 'Authorized',
+  Captured = 'Captured',
+  Failed = 'Failed',
+  Refunded = 'Refunded',
+  Canceled = 'Canceled'
 }
 
 enum PaymentSource {
