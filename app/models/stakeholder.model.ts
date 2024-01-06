@@ -5,22 +5,28 @@ export class Stakeholder extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column(DataType.INTEGER.UNSIGNED)
+  @Column({
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false,
+  })
   declare id: number;
 
   @Column({
     type: DataType.STRING(25),
-    allowNull: false
+    allowNull: false,
   })
   firstName!: string;
 
   @Column({
     type: DataType.STRING(25),
-    allowNull: false
+    allowNull: false,
   })
   lastName!: string;
 
-  @Column(DataType.TEXT)
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
   pictureUrl?: string;
 
 }

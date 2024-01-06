@@ -8,12 +8,14 @@ export class Product extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column({ type: DataType.INTEGER.UNSIGNED })
+  @Column({ 
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false,})
   declare id: number;
 
   @Column({
     type: DataType.STRING(50),
-    allowNull: false
+    allowNull: false,
   })
   private name!: string;
 
@@ -22,28 +24,37 @@ export class Product extends Model {
 
   @Column({
     type: DataType.STRING(100),
-    allowNull: true
+    allowNull: true,
   })
   private description!: string;
 
   @Column({
     type: DataType.DECIMAL(10, 2),
-    allowNull: false
+    allowNull: false,
   })
   private unitPrice!: number;
 
-  @Column({ type: DataType.STRING })
+  @Column({ 
+    type: DataType.STRING,
+    allowNull: true, 
+  })
   private imageUrl?: string;
 
   @ForeignKey(() => Category)
-  @Column(DataType.INTEGER)
+  @Column({
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false, 
+  })
   categoryId!: number;
 
-  @Column({ type: DataType.INTEGER.UNSIGNED })
+  @Column({ 
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false, })
   private stockQuantity!: number;
 
   @Column({
     type: DataType.STRING,
+    allowNull: false,
   })
   private manufacturer!: string;
 

@@ -23,13 +23,16 @@ export class Cart extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column(DataType.INTEGER.UNSIGNED)
+  @Column({
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false,
+  })
   private declare cartId: number;
 
   @ForeignKey(() => Userinfo)
   @Column({
     type: DataType.INTEGER.UNSIGNED,
-    allowNull: false
+    allowNull: false,
   })
   private userId!: number;
 
@@ -38,27 +41,27 @@ export class Cart extends Model {
 
   @Column({
     type: DataType.DECIMAL(10, 2),
-    allowNull: false
+    allowNull: false,
   })
   private subtotal!: number;
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: false
+    allowNull: false,
   })
   private total!: number;
 
   @Column({
-    type: DataType.JSONB,
+    type: DataType.TEXT,
     allowNull: true,
   })
-  private shippingInfo!: ShippingInfo;
+  private shippingInfo?: ShippingInfo;
 
   @Column({
-    type: DataType.JSONB,
+    type: DataType.TEXT,
     allowNull: true,
   })
-  private taxInfo!: TaxInfo;
+  private taxInfo?: TaxInfo;
 
   @Column({
     type: DataType.STRING,

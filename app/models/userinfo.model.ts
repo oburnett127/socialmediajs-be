@@ -5,30 +5,33 @@ export class Userinfo extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column(DataType.INTEGER.UNSIGNED)
+  @Column({
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false,
+  })
   declare id: number;
 
   @Column({
     type: DataType.STRING(50),
-    allowNull: false
+    allowNull: false,
   })
   email!: string;
 
   @Column({
     type: DataType.STRING(50),
-    allowNull: false
+    allowNull: false,
   })
   password!: string;
 
   @Column({
     type: DataType.STRING(20),
-    allowNull: false
+    allowNull: false,
   })
   firstName!: string;
 
   @Column({
     type: DataType.STRING(20),
-    allowNull: false
+    allowNull: false,
   })
   lastName!: string;
 }

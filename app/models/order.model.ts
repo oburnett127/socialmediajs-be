@@ -30,11 +30,22 @@ export class Order extends Model {
   })
   private totalPrice!: number;
 
-  
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
   private shippingAddress!: Address;
 
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
   private billingInfo!: BillingInfo;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })  
   private orderStatus!: string;
 
 }
@@ -45,4 +56,17 @@ class BillingInfo {
 
   private expirationDate!: Date;
 
+}
+
+enum OrderStatus {
+  PENDING = "pending",
+  PROCESSING = "processing",
+  SHIPPED = "shipped",
+  DELIVERED = "delivered",
+  CANCELED = "canceled",
+  REFUNDED = "refunded",
+  ONHOLD = "on hold",
+  COMPLETED = "completed",
+  FAILED = "failed",
+  PENDINGPAYMENT = "pending payment",
 }

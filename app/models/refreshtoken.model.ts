@@ -7,25 +7,32 @@ import { Userinfo } from './userinfo.model.js';
 export class RefreshToken extends Model {
     @PrimaryKey
     @AutoIncrement
-    @Column(DataType.INTEGER.UNSIGNED)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+    })
     declare id: number;
    
-    @AllowNull(false)
-    @Column(DataType.STRING)
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
     token!: string;
 
-    @AllowNull(false)
     @ForeignKey(() => Userinfo)
     @Column({
         type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
         references: {
          model: Userinfo,
          key: 'id'
-        }
+        },
     })
     userId!: number;
 
-    @AllowNull(false)
-    @Column(DataType.DATE)
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
     expiryDate!: Date;
 }
