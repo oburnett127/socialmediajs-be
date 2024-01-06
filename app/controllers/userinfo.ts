@@ -8,6 +8,7 @@ import { TYPES } from '../service/types.js';
 import logger from '../config/logger.js';
 import { RefreshToken } from '../models/refreshtoken.model.js';
 import { Userinfo } from 'app/models/userinfo.model.js';
+import { serialize } from 'cookie';
 
 const generateAccessToken = (userId: number) => {
   if(!userId) {
@@ -74,15 +75,26 @@ export class UserinfoController implements interfaces.Controller {
                       firstName: userInfo.firstName, lastName: userInfo.lastName }
       const accessToken = generateAccessToken(userInfo.id);
       const refreshToken = await generateRefreshToken(userInfo.id);
-  
-      res.status(200).json({ accessToken, refreshToken });
+
+      const cookieOptions = {
+        httpOnly: true, 
+        secure: true,
+        maxAge: 7 * 24 * 60 * 60,
+        path: '/refresh-token',
+      };
+
+      const refreshTokenCookie = serialize('refreshToken', refreshToken, cookieOptions);
+
+      res.setHeader('Set-Cookie', refreshTokenCookie);
+
+      res.status(200).json({ accessToken });
     } catch (error) {
       logger.error("Login error:", error);
       res.sendStatus(500);
     }
   }
   
-  @httpPost('/create', localPassport.authenticate('jwt', { session: false}))
+  @httpPost('/create')
   private async createUserinfo(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const userinfo: UserinfoPayload = req.body;
 

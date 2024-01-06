@@ -48,10 +48,22 @@ export class Cart extends Model {
   })
   private total!: number;
 
+  @Column({
+    type: DataType.JSONB,
+    allowNull: true,
+  })
   private shippingInfo!: ShippingInfo;
 
+  @Column({
+    type: DataType.JSONB,
+    allowNull: true,
+  })
   private taxInfo!: TaxInfo;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
   private cartStatus!: CartStatus;
 
   //private sessionId: number;

@@ -8,13 +8,16 @@ export class Order extends Model {
 
   @PrimaryKey
   @AutoIncrement
-  @Column(DataType.INTEGER.UNSIGNED)
+  @Column({
+    type: DataType.INTEGER.UNSIGNED,
+    allowNull: false,
+  })
   private declare orderId: number;
 
   @ForeignKey(() => Userinfo)
   @Column({
     type: DataType.INTEGER.UNSIGNED,
-    allowNull: false
+    allowNull: false,
   })
   private userId!: number;
 
@@ -23,10 +26,11 @@ export class Order extends Model {
 
   @Column({
     type: DataType.DECIMAL(10, 2),
-    allowNull: false
+    allowNull: false,
   })
   private totalPrice!: number;
 
+  
   private shippingAddress!: Address;
 
   private billingInfo!: BillingInfo;

@@ -9,19 +9,26 @@ export class Job extends Model {
 
   @Column({
     type: DataType.STRING(100),
-    allowNull: false
+    allowNull: false,
   })
   title!: string;
 
-  @Column(DataType.TEXT)
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true
+  })
   description?: string;
 
-  @Column(DataType.TEXT)
+  @Column({
+    type: DataType.TEXT,
+    allowNull: true,
+  })
   requirements?: string;
 
   @Column({
     type: DataType.DATE,
-    defaultValue: DataType.NOW
+    defaultValue: DataType.NOW,
+    allowNull: false,
   })
   postDate!: Date;
 

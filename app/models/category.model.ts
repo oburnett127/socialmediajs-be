@@ -8,8 +8,16 @@ export class Category extends Model {
   @Column({ type: DataType.INTEGER.UNSIGNED })
   declare id: number;
 
+  @Column({ 
+    type: DataType.STRING,
+    allowNull: false,
+   })
   private name!: string;
 
+  @Column({ 
+    type: DataType.STRING,
+    allowNull: true,
+   })
   private description!: string;
 
 }
