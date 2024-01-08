@@ -2,6 +2,7 @@ import { injectable } from 'inversify';
 import { Userinfo } from '../models/userinfo.model.js';
 import logger from '../config/logger.js';
 import { RefreshToken } from '../models/refreshtoken.model.js';
+import bcrypt from 'bcryptjs';
 
 export interface UserinfoPayload {
   email: string;
@@ -35,10 +36,12 @@ export class UserinfoService {
     return Userinfo.findOne({
       where: { email: loginInfo.email },
     })
-      .then((userinfo) => {
+      .then(async (userinfo) => {
         if (!userinfo) return false;
-        const isValidPassword = loginInfo.password === userinfo.dataValues.password;
-        return isValidPassword;
+        const receivedHashedPassword = loginInfo.password;
+        const storedHashedPassword = userinfo.password;
+        const passwordMatch = await bcrypt.compare(receivedHashedPassword, storedHashedPassword);
+        return passwordMatch;
       })
       .catch((err) => {
         logger.error(err.message);

@@ -6,9 +6,9 @@ import { Userinfo } from "./userinfo.model.js";
 import { RefreshToken } from "./refreshtoken.model.js";
 import { Cart } from "./cart.model.js";
 import { Product } from "./product.model.js";
-import { CartProduct } from "./cartProduct.model.js";
+import { CartProduct } from "./cartproduct.model.js";
 import { Payment } from "./payment.model.js";
-import { OrderProduct } from "./orderProduct.model.js";
+import { OrderProduct } from "./orderproduct.model.js";
 import { Order } from "./order.model.js";
 import { Category } from "./category.model.js";
 

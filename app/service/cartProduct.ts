@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { CartProduct } from '../models/cartProduct.model.js';
+import { CartProduct } from '../models/cartproduct.model.js';
 import logger from '../config/logger.js';
 import { Category } from 'app/models/category.model.js';
 

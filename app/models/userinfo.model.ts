@@ -18,7 +18,7 @@ export class Userinfo extends Model {
   email!: string;
 
   @Column({
-    type: DataType.STRING(50),
+    type: DataType.STRING,
     allowNull: false,
   })
   password!: string;

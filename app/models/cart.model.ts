@@ -1,7 +1,7 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsToMany } from 'sequelize-typescript';
 import { Product } from './product.model.js';
 import { Userinfo } from './userinfo.model.js';
-import { CartProduct } from './cartProduct.model.js';
+import { CartProduct } from './cartproduct.model.js';
 
 enum CartStatus {
   OPEN = "open",

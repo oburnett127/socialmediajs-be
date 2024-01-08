@@ -2,7 +2,7 @@ import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request
 import { inject } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
-import { OrderProductPayload, OrderProductService } from '../service/orderProduct.js';
+import { OrderProductPayload, OrderProductService } from '../service/orderproduct.js';
 import { TYPES } from '../service/types.js';
 import logger from '../config/logger.js';
 

@@ -10,10 +10,10 @@ import { StakeholderService } from './service/stakeholder.js';
 import { UserinfoService } from './service/userinfo.js';
 import { ProductService } from './service/product.js';
 import { CartService } from './service/cart.js';
-import { CartProductService } from './service/cartProduct.js';
+import { CartProductService } from './service/cartproduct.js';
 import { CategoryService } from './service/category.js';
 import { OrderService } from './service/order.js';
-import { OrderProductService } from './service/orderProduct.js';
+import { OrderProductService } from './service/orderproduct.js';
 import { PaymentService } from './service/payment.js';
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
@@ -53,10 +53,10 @@ import './controllers/stakeholder.js';
 import './controllers/userinfo.js';
 import './controllers/product.js';
 import './controllers/cart.js';
-import './controllers/cartProduct.js';
+import './controllers/cartproduct.js';
 import './controllers/category.js';
 import './controllers/order.js';
-import './controllers/orderProduct.js';
+import './controllers/orderproduct.js';
 import './controllers/payment.js';
 
 sequelize.sync()
