@@ -4,7 +4,6 @@ import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { ProductPayload, ProductService } from '../service/product.js';
 import { TYPES } from '../service/types.js';
-import logger from '../config/logger.js';
 
 @controller('/product')
 export class ProductController implements interfaces.Controller {

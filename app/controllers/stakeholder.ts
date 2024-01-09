@@ -4,7 +4,6 @@ import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { StakeholderPayload, StakeholderService } from '../service/stakeholder.js';
 import { TYPES } from '../service/types.js';
-import logger from '../config/logger.js';
 
 @controller('/stakeholder')
 export class StakeholderController implements interfaces.Controller {

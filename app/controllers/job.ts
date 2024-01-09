@@ -4,7 +4,6 @@ import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { JobPayload, JobService } from '../service/job.js';
 import { TYPES } from '../service/types.js';
-import logger from '../config/logger.js';
 
 @controller('/job')
 export class JobController implements interfaces.Controller {

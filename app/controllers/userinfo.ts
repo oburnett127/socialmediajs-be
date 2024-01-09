@@ -7,7 +7,6 @@ import { UserinfoPayload, LoginPayload, UserinfoService } from '../service/useri
 import { TYPES } from '../service/types.js';
 import logger from '../config/logger.js';
 import { RefreshToken } from '../models/refreshtoken.model.js';
-import { Userinfo } from 'app/models/userinfo.model.js';
 import { serialize } from 'cookie';
 
 const generateAccessToken = (userId: number) => {
@@ -71,8 +70,8 @@ export class UserinfoController implements interfaces.Controller {
         return;
       }
   
-      const user = { id: userInfo.id, email: userInfo.email, password: userInfo.password, 
-                      firstName: userInfo.firstName, lastName: userInfo.lastName }
+      //const user = { id: userInfo.id, email: userInfo.email, password: userInfo.password, 
+      //                firstName: userInfo.firstName, lastName: userInfo.lastName }
       const accessToken = generateAccessToken(userInfo.id);
       const refreshToken = await generateRefreshToken(userInfo.id);
 
@@ -138,7 +137,7 @@ export class UserinfoController implements interfaces.Controller {
     });
   }
 
-  @httpGet('/findAll')
+  @httpGet('/findAll', localPassport.authenticate('jwt', { session: false}))
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
     const response = await this.userinfoService.findAll();
     if (response) {
@@ -149,7 +148,7 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/findOne/:id')
+  @httpGet('/findOne/:id', localPassport.authenticate('jwt', { session: false}))
   private async findOne(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
     if (!id) {
       res.sendStatus(400);
@@ -164,7 +163,7 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/findByEmail/:email')
+  @httpGet('/findByEmail/:email', localPassport.authenticate('jwt', { session: false}))
   private async findByEmail(@requestParam('email') email: string, @response() res: express.Response): Promise<void> {
     if (!email) {
       res.sendStatus(400);

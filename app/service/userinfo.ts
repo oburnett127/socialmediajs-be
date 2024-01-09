@@ -33,21 +33,30 @@ interface RefreshTokenCreationAttributes {
 export class UserinfoService {
 
   public async login(loginInfo: LoginPayload): Promise<boolean> {
-    return Userinfo.findOne({
-      where: { email: loginInfo.email },
-    })
-      .then(async (userinfo) => {
-        if (!userinfo) return false;
-        const receivedHashedPassword = loginInfo.password;
-        const storedHashedPassword = userinfo.password;
-        const passwordMatch = await bcrypt.compare(receivedHashedPassword, storedHashedPassword);
-        return passwordMatch;
-      })
-      .catch((err) => {
-        logger.error(err.message);
-        throw err;
+    try {
+      const userinfo = await Userinfo.findOne({
+        where: { email: loginInfo.email },
       });
+  
+      if (!userinfo) {
+        return false;
+      }
+  
+      const receivedHashedPassword = loginInfo.password;
+      const storedHashedPassword = userinfo.password;
+  
+      if (!receivedHashedPassword || !storedHashedPassword) {
+        return false;
+      }
+  
+      const passwordMatch = await bcrypt.compare(receivedHashedPassword, storedHashedPassword);
+      return passwordMatch;
+    } catch (err: any) {
+      logger.error(err.message);
+      throw err;
+    }
   }
+  
   
   public async create(userinfo: UserinfoPayload): Promise<Userinfo | void> {
     return Userinfo.create(userinfo as any)

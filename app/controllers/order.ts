@@ -4,7 +4,6 @@ import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { OrderPayload, OrderService } from '../service/order.js';
 import { TYPES } from '../service/types.js';
-import logger from '../config/logger.js';
 
 @controller('/order')
 export class OrderController implements interfaces.Controller {
@@ -29,7 +28,7 @@ export class OrderController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/findAll')
+  @httpGet('/findAll', localPassport.authenticate('jwt', { session: false}))
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
     const response = await this.orderService.findAll();
     if (response) {
@@ -40,7 +39,7 @@ export class OrderController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/findOne/:id')
+  @httpGet('/findOne/:id', localPassport.authenticate('jwt', { session: false}))
   private async findOne(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
     if (!id) {
       res.sendStatus(400);
