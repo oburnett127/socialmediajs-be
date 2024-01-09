@@ -42,14 +42,14 @@ export class UserinfoService {
         return false;
       }
   
-      const receivedHashedPassword = loginInfo.password;
+      const receivedPlaintextPassword = loginInfo.password;
       const storedHashedPassword = userinfo.password;
   
-      if (!receivedHashedPassword || !storedHashedPassword) {
+      if (!receivedPlaintextPassword || !storedHashedPassword) {
         return false;
       }
   
-      const passwordMatch = await bcrypt.compare(receivedHashedPassword, storedHashedPassword);
+      const passwordMatch = await bcrypt.compare(receivedPlaintextPassword, storedHashedPassword);
       return passwordMatch;
     } catch (err: any) {
       logger.error(err.message);
@@ -59,10 +59,19 @@ export class UserinfoService {
   
   
   public async create(userinfo: UserinfoPayload): Promise<Userinfo | void> {
-    return Userinfo.create(userinfo as any)
-      .then((data: any) => data)
-      .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
+    try {
+      const hashedPassword = await bcrypt.hash(userinfo.password, 10);
+  
+      userinfo.password = hashedPassword;
+  
+      const newUserinfo = await Userinfo.create(userinfo as any);
+      return newUserinfo;
+    } catch (err: any) {
+      logger.error(err.message);
+      throw err;
+    }
   }
+  
 
   public async saveRefreshToken(refreshTokenPayload: RefreshTokenPayload): Promise<void> {
     try {

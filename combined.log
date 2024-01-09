@@ -96,3 +96,6 @@
 {"level":"error","message":"Login error: Illegal arguments: string, undefined","stack":"Error: Illegal arguments: string, undefined\n    at _async (C:\\Users\\oburnett\\projects\\samplebe1\\node_modules\\bcryptjs\\dist\\bcrypt.js:286:46)\n    at C:\\Users\\oburnett\\projects\\samplebe1\\node_modules\\bcryptjs\\dist\\bcrypt.js:307:17\n    at new Promise (<anonymous>)\n    at bcrypt.compare (C:\\Users\\oburnett\\projects\\samplebe1\\node_modules\\bcryptjs\\dist\\bcrypt.js:306:20)\n    at file:///C:/Users/oburnett/projects/samplebe1/dist/app/service/userinfo.js:22:48\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async UserinfoController.login (file:///C:/Users/oburnett/projects/samplebe1/dist/app/controllers/userinfo.js:54:36)"}
 {"level":"info","message":"Server started on port 8080 :)"}
 {"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
