@@ -1,6 +1,6 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, BelongsToMany, ForeignKey } from 'sequelize-typescript';
 import { Category } from './category.model.js';
-import { CartProduct } from './cartproduct.model.js';
+import { CartProduct } from './cartProduct.model.js';
 import { Cart } from './cart.model.js';
 
 @Table

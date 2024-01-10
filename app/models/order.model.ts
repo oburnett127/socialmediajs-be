@@ -1,6 +1,6 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany, ForeignKey } from 'sequelize-typescript';
 import { Userinfo } from './userinfo.model.js';
-import { OrderProduct } from './orderproduct.model.js';
+import { OrderProduct } from './orderProduct.model.js';
 import { Address } from './address.model.js';
 
 @Table

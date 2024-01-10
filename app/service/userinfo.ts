@@ -36,6 +36,7 @@ export class UserinfoService {
     try {
       const userinfo = await Userinfo.findOne({
         where: { email: loginInfo.email },
+        attributes: ['password'],
       });
   
       if (!userinfo) {
@@ -43,7 +44,7 @@ export class UserinfoService {
       }
   
       const receivedPlaintextPassword = loginInfo.password;
-      const storedHashedPassword = userinfo.password;
+      const storedHashedPassword = userinfo.dataValues.password;
   
       if (!receivedPlaintextPassword || !storedHashedPassword) {
         return false;

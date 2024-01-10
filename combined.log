@@ -99,3 +99,113 @@
 {"level":"info","message":"Server started on port 8080 :)"}
 {"level":"info","message":"Server started on port 8080 :)"}
 {"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"createdAt":"2024-01-09T22:52:47.000Z","email":"jsmith@fake.com","firstName":"John","id":1,"lastName":"Smith","password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C","updatedAt":"2024-01-09T22:52:47.000Z"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"createdAt":"2024-01-09T22:52:47.000Z","email":"jsmith@fake.com","firstName":"John","id":1,"lastName":"Smith","password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C","updatedAt":"2024-01-09T22:52:47.000Z"}}
+{"level":"info","message":"one or more password vars are null"}
+{"level":"info","message":"userAuthorized is: false"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"userAuthorized is: true"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"test123"}
+{"level":"info"}
+{"level":"info","message":"jsmith@fake.com"}
+{"level":"info","message":{"password":"$2a$10$p3.BW2gNw4YCgz8v6ONkXO/n0X0XPO3EzNQo0ZKMjUmxyhntdI07C"}}
+{"level":"info","message":"userAuthorized is: true"}

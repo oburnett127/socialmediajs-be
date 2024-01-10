@@ -6,9 +6,9 @@ import { Userinfo } from "./userinfo.model.js";
 import { RefreshToken } from "./refreshtoken.model.js";
 import { Cart } from "./cart.model.js";
 import { Product } from "./product.model.js";
-import { CartProduct } from "./cartproduct.model.js";
+import { CartProduct } from "./cartProduct.model.js";
 import { Payment } from "./payment.model.js";
-import { OrderProduct } from "./orderproduct.model.js";
+import { OrderProduct } from "./orderProduct.model.js";
 import { Order } from "./order.model.js";
 import { Category } from "./category.model.js";
 
@@ -18,6 +18,7 @@ const sequelize = new Sequelize({
   password: dbConfig.PASSWORD,
   host: dbConfig.HOST,
   dialect: 'mysql',
+  logging: console.log,
   models: [Userinfo, Job, Stakeholder, RefreshToken, Product, Cart, CartProduct, 
     Category, Order, OrderProduct, Payment],
 });

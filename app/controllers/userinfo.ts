@@ -49,6 +49,8 @@ export class UserinfoController implements interfaces.Controller {
   @httpPost('/login')
   private async login(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     try {
+      logger.info('login function called');
+
       const loginInfo: LoginPayload = req.body;
   
       if (!loginInfo) {
@@ -58,6 +60,8 @@ export class UserinfoController implements interfaces.Controller {
       
       const userInfo = await this.userinfoService.findByEmail(loginInfo.email);
       const userAuthorized = await this.userinfoService.login(loginInfo);
+
+      logger.info('userAuthorized is: ' + userAuthorized);
   
       if (!userAuthorized || !userInfo) {
         res.sendStatus(401);
