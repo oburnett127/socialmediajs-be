@@ -1,4 +1,5 @@
-import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany } from 'sequelize-typescript';
+import { Order } from './order.model.js';
 
 @Table
 export class Userinfo extends Model {
@@ -34,4 +35,7 @@ export class Userinfo extends Model {
     allowNull: false,
   })
   lastName!: string;
+
+  @HasMany(() => Order)
+  orders!: Order[];
 }

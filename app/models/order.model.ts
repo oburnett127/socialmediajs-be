@@ -21,8 +21,11 @@ export class Order extends Model {
   })
   private userId!: number;
 
-  @HasMany(() => OrderProduct)
-  private products!: OrderProduct[];
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+  })
+  private orderDate!: Date;
 
   @Column({
     type: DataType.DECIMAL(10, 2),
@@ -48,6 +51,10 @@ export class Order extends Model {
   })  
   private orderStatus!: string;
 
+  @HasMany(() => OrderProduct)
+  private products!: OrderProduct[];
+
+  
 }
 
 class BillingInfo {
