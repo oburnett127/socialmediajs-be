@@ -216,3 +216,5 @@
 {"level":"info","message":"userAuthorized is: true"}
 {"level":"info","message":"login function called"}
 {"level":"info","message":"userAuthorized is: true"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}

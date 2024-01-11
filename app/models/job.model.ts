@@ -11,25 +11,25 @@ export class Job extends Model {
     type: DataType.STRING(100),
     allowNull: false,
   })
-  title!: string;
+  private title!: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true
   })
-  description?: string;
+  private description?: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
   })
-  requirements?: string;
+  private requirements?: string;
 
   @Column({
     type: DataType.DATE,
     defaultValue: DataType.NOW,
     allowNull: false,
   })
-  postDate!: Date;
+  private postDate!: Date;
 
 }

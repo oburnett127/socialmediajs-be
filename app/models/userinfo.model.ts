@@ -16,25 +16,25 @@ export class Userinfo extends Model {
     type: DataType.STRING(50),
     allowNull: false,
   })
-  email!: string;
+  private email!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password!: string;
+  private password!: string;
 
   @Column({
     type: DataType.STRING(20),
     allowNull: false,
   })
-  firstName!: string;
+  private firstName!: string;
 
   @Column({
     type: DataType.STRING(20),
     allowNull: false,
   })
-  lastName!: string;
+  private lastName!: string;
 
   @HasMany(() => Order)
   orders!: Order[];

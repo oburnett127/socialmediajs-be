@@ -15,18 +15,18 @@ export class Stakeholder extends Model {
     type: DataType.STRING(25),
     allowNull: false,
   })
-  firstName!: string;
+  private firstName!: string;
 
   @Column({
     type: DataType.STRING(25),
     allowNull: false,
   })
-  lastName!: string;
+  private lastName!: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
   })
-  pictureUrl?: string;
+  private pictureUrl?: string;
 
 }

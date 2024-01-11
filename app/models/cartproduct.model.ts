@@ -20,7 +20,7 @@ export class CartProduct extends Model {
     type: DataType.INTEGER.UNSIGNED,
     allowNull: false,
   })
-  cartId!: number;
+  private cartId!: number;
 
   @Column({ 
     type: DataType.INTEGER.UNSIGNED,
@@ -51,7 +51,7 @@ export class CartProduct extends Model {
     type: DataType.INTEGER,
     allowNull: false
   })
-  categoryId!: number;
+  private categoryId!: number;
 
   @Column({
     type: DataType.DECIMAL(10, 2),

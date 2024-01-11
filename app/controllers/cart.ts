@@ -4,6 +4,8 @@ import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { CartPayload, CartService } from '../service/cart.js';
 import { TYPES } from '../service/types.js';
+import { Cart } from 'app/models/cart.model.js';
+import { CartProduct } from 'app/models/cartProduct.model.js';
 
 @controller('/cart')
 export class CartController implements interfaces.Controller {
@@ -27,6 +29,39 @@ export class CartController implements interfaces.Controller {
       res.sendStatus(500);
     }
   }
+
+  // @httpPost('/addToCart', localPassport.authenticate('jwt', { session: false}))
+  // private async addToCart(@request() req: express.Request, @response() res: express.Response): Promise<express.Response> {
+  //   const { productId, quantity } = req.body;
+
+  //   try {
+  //     const userinfo = req.userinfo;
+
+  //     const [cart, created] = await Cart.findOrCreate({
+  //       where: { userId: userinfo.id },
+  //     });
+
+  //     const cartProduct = await CartProduct.findOne({
+  //       where: { cartId: cart.id, productId },
+  //     });
+
+  //     if (cartProduct) {
+  //       cartProduct.quantity += quantity;
+  //       await cartProduct.save();
+  //     } else {
+  //       await CartProduct.create({
+  //         cartId: cart.id,
+  //         productId,
+  //         quantity,
+  //       });
+  //     }
+
+  //     return res.status(created ? 201 : 200).json({ message: 'Product added to cart' });
+  //   } catch (error) {
+  //     console.error('Error adding product to cart:', error);
+  //     return res.status(500).json({ message: 'Internal server error' });
+  //   }
+  // });
 
   @httpGet('/findAll', localPassport.authenticate('jwt', { session: false}))
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
@@ -92,4 +127,5 @@ export class CartController implements interfaces.Controller {
       res.sendStatus(400);
     }
   }
+
 }

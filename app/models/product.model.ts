@@ -19,9 +19,6 @@ export class Product extends Model {
   })
   private name!: string;
 
-  @BelongsToMany(() => Cart, () => CartProduct)
-  carts?: Cart[];
-
   @Column({
     type: DataType.STRING(100),
     allowNull: true,
@@ -45,7 +42,7 @@ export class Product extends Model {
     type: DataType.INTEGER.UNSIGNED,
     allowNull: false, 
   })
-  categoryId!: number;
+  private categoryId!: number;
 
   @Column({ 
     type: DataType.INTEGER.UNSIGNED,
@@ -58,4 +55,6 @@ export class Product extends Model {
   })
   private manufacturer!: string;
 
+  @BelongsToMany(() => Cart, () => CartProduct)
+  carts?: Cart[];
 }

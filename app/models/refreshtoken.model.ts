@@ -17,7 +17,7 @@ export class RefreshToken extends Model {
         type: DataType.STRING,
         allowNull: false,
     })
-    token!: string;
+    private token!: string;
 
     @ForeignKey(() => Userinfo)
     @Column({
@@ -28,11 +28,11 @@ export class RefreshToken extends Model {
          key: 'id'
         },
     })
-    userId!: number;
+    private userId!: number;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
     })
-    expiryDate!: Date;
+    private expiryDate!: Date;
 }
