@@ -26,6 +26,7 @@ export class CartProduct extends Model {
     type: DataType.INTEGER.UNSIGNED,
     allowNull: false,
   })
+  @AutoSetter
   private quantity!: number;
 
   @Column({
@@ -58,5 +59,13 @@ export class CartProduct extends Model {
     allowNull: false
   })
   private totalPrice!: number;
+
+  quantityIncrement(delta: number) {
+    if (typeof this.quantity === 'number') {
+      this.quantity += delta;
+    } else {
+      console.error('Property is not a number.');
+    }
+  }
 
 }

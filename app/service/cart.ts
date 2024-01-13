@@ -2,6 +2,8 @@ import { injectable } from 'inversify';
 import { Cart } from '../models/cart.model.js';
 import logger from '../config/logger.js';
 import { Category } from 'app/models/category.model.js';
+import { CartProduct } from 'app/models/cartProduct.model.js';
+import { Product } from 'app/models/product.model.js';
 
 export interface CartPayload {
   name: string;
@@ -15,6 +17,21 @@ export interface CartPayload {
 
 @injectable()
 export class CartService {
+
+  public async addProductToCart(cartId: number, productId: number, quantity: number = 1): Promise<CartProduct> {
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      throw new Error('Product not found');
+    }
+  
+    const existingCartItem = await CartProduct.findOne({ where: { cartId, productId } });
+    if (existingCartItem) {
+      existingCartItem.quantityIncrement(quantity);
+      return existingCartItem.save();
+    } else {
+      return CartProduct.create({ cartId, productId, quantity });
+    }
+  }
 
   public async create(cart: CartPayload): Promise<Cart | void> {
     return Cart.create(cart as any)

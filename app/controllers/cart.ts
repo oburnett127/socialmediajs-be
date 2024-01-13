@@ -30,38 +30,16 @@ export class CartController implements interfaces.Controller {
     }
   }
 
-  // @httpPost('/addToCart', localPassport.authenticate('jwt', { session: false}))
-  // private async addToCart(@request() req: express.Request, @response() res: express.Response): Promise<express.Response> {
-  //   const { productId, quantity } = req.body;
-
-  //   try {
-  //     const userinfo = req.userinfo;
-
-  //     const [cart, created] = await Cart.findOrCreate({
-  //       where: { userId: userinfo.id },
-  //     });
-
-  //     const cartProduct = await CartProduct.findOne({
-  //       where: { cartId: cart.id, productId },
-  //     });
-
-  //     if (cartProduct) {
-  //       cartProduct.quantity += quantity;
-  //       await cartProduct.save();
-  //     } else {
-  //       await CartProduct.create({
-  //         cartId: cart.id,
-  //         productId,
-  //         quantity,
-  //       });
-  //     }
-
-  //     return res.status(created ? 201 : 200).json({ message: 'Product added to cart' });
-  //   } catch (error) {
-  //     console.error('Error adding product to cart:', error);
-  //     return res.status(500).json({ message: 'Internal server error' });
-  //   }
-  // });
+  @httpPost('/addToCart', localPassport.authenticate('jwt', { session: false}))
+  private async addProductToCart(@request() req: express.Request, @response() res: express.Response): Promise<express.Response> {
+    try {
+      const { cartId, productId, quantity } = req.body;
+      const cartItem = await this.cartService.addProductToCart(cartId, productId, quantity);
+      res.json(cartItem);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
 
   @httpGet('/findAll', localPassport.authenticate('jwt', { session: false}))
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
