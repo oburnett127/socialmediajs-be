@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { Order } from '../models/order.model.js';
 import logger from '../config/logger.js';
-import { Category } from 'app/models/category.model.js';
+import { Category } from '../models/category.model.js';
 
 export interface OrderPayload {
   name: string;

@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
-import { Cart } from '../models/cart.model.js';
+import { Cart } from '../models/friend.model.js';
 import logger from '../config/logger.js';
-import { Category } from 'app/models/category.model.js';
-import { CartProduct } from 'app/models/cartProduct.model.js';
-import { Product } from 'app/models/product.model.js';
+import { Category } from '../models/category.model.js';
+import { CartProduct } from '../models/cartProduct.model.js';
+import { Product } from '../models/product.model.js';
 
 export interface CartPayload {
   name: string;

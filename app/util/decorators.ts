@@ -1,4 +1,4 @@
-function AutoSetter(target: any, key: string) {
+export function AutoSetter(target: any, key: string) {
   const privateKeyName = `_${key}`;
   
   // Getter

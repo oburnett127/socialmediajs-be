@@ -4,7 +4,7 @@ import { Job } from "./job.model.js";
 import { Stakeholder } from "./stakeholder.model.js";
 import { Userinfo } from "./userinfo.model.js";
 import { RefreshToken } from "./refreshtoken.model.js";
-import { Cart } from "./cart.model.js";
+import { Cart } from "./friend.model.js";
 import { Product } from "./product.model.js";
 import { CartProduct } from "./cartProduct.model.js";
 import { Payment } from "./payment.model.js";

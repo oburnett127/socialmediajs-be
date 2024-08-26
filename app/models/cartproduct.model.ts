@@ -1,7 +1,8 @@
 import { Model, Table, Column, DataType, PrimaryKey, ForeignKey, AllowNull } from 'sequelize-typescript';
 import { Product } from './product.model.js';
-import { Cart } from './cart.model.js';
+import { Cart } from './friend.model.js';
 import { Category } from './category.model.js';
+import { AutoSetter } from '../util/decorators.js';
 
 @Table
 export class CartProduct extends Model {

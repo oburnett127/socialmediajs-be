@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { CartProduct } from '../models/cartProduct.model.js';
 import logger from '../config/logger.js';
-import { Category } from 'app/models/category.model.js';
+import { Category } from '../models/category.model.js';
 
 export interface CartProductPayload {
   name: string;

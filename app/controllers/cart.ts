@@ -4,8 +4,6 @@ import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { CartPayload, CartService } from '../service/cart.js';
 import { TYPES } from '../service/types.js';
-import { Cart } from 'app/models/cart.model.js';
-import { CartProduct } from 'app/models/cartProduct.model.js';
 
 @controller('/cart')
 export class CartController implements interfaces.Controller {
@@ -31,7 +29,7 @@ export class CartController implements interfaces.Controller {
   }
 
   @httpPost('/addToCart', localPassport.authenticate('jwt', { session: false}))
-  private async addProductToCart(@request() req: express.Request, @response() res: express.Response): Promise<express.Response> {
+  private async addProductToCart(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     try {
       const { cartId, productId, quantity } = req.body;
       const cartItem = await this.cartService.addProductToCart(cartId, productId, quantity);

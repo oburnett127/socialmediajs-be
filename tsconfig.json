@@ -15,11 +15,14 @@
       "outDir": "dist",
       "baseUrl": ".",
       "paths": {
-        "UserinfoModule": ["./app/userinfo.d.ts"]
+        "UserinfoModule": ["./../userinfo.d.ts"]
       }
   },
   "include": [
       "app/**/*"
+  ],
+  "exclude": [
+    "dist","node_modules"
   ]
 }
   

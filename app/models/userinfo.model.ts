@@ -13,6 +13,18 @@ export class Userinfo extends Model {
   declare id: number;
 
   @Column({
+    type: DataType.STRING(20),
+    allowNull: false,
+  })
+  private firstName!: string;
+
+  @Column({
+    type: DataType.STRING(20),
+    allowNull: false,
+  })
+  private lastName!: string;
+
+  @Column({
     type: DataType.STRING(50),
     allowNull: false,
   })
@@ -25,17 +37,9 @@ export class Userinfo extends Model {
   private password!: string;
 
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING,
     allowNull: false,
   })
-  private firstName!: string;
+  private roles!: string;
 
-  @Column({
-    type: DataType.STRING(20),
-    allowNull: false,
-  })
-  private lastName!: string;
-
-  @HasMany(() => Order)
-  orders!: Order[];
 }
