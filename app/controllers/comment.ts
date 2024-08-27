@@ -44,7 +44,6 @@ export class CommentController implements interfaces.Controller {
     if (!id) {
       res.sendStatus(400);
     }
-
     const response = await this.commentService.deleteComment(id);
     if (response) {
       res.sendStatus(200);

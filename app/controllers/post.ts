@@ -26,9 +26,40 @@ export class PostController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/getbypost/:postId', localPassport.authenticate('jwt', { session: false}))
-  private async getPostsByPostId(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
-    const response = await this.postService.getPostsByPostId();
+  @httpGet('/getonepost/:postId', localPassport.authenticate('jwt', { session: false}))
+  private async getOnePost(@requestParam('postId') postId: number, @response() res: express.Response) : Promise<void> {
+    if (!postId) {
+      res.sendStatus(400);
+    }
+    const response = await this.postService.getOnePost(postId);
+    if (response) {
+      res.status(200)
+      res.send(response);
+    } else {
+      res.sendStatus(500);
+    }
+  }
+
+  @httpGet('/getbyauthor/:authorUserId', localPassport.authenticate('jwt', { session: false}))
+  private async getPostsByAuthorUserId(@requestParam('authorUserId') authorUserId: number, @response() res: express.Response) : Promise<void> {
+    if (!authorUserId) {
+      res.sendStatus(400);
+    }
+    const response = await this.postService.getPostsByAuthorUserId(authorUserId);
+    if (response) {
+      res.status(200)
+      res.send(response);
+    } else {
+      res.sendStatus(500);
+    }
+  }
+
+  @httpGet('/getpostsbyprofile/:authorUserId', localPassport.authenticate('jwt', { session: false}))
+  private async getPostsByProfileUserId(@requestParam('profileUserId') profileUserId: number, @response() res: express.Response) : Promise<void> {
+    if (!profileUserId) {
+      res.sendStatus(400);
+    }
+    const response = await this.postService.getPostsByProfileUserId(profileUserId);
     if (response) {
       res.status(200)
       res.send(response);

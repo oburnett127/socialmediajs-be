@@ -141,7 +141,7 @@ export class UserinfoController implements interfaces.Controller {
     });
   }
 
-  @httpGet('/findAll', localPassport.authenticate('jwt', { session: false}))
+  @httpGet('/findAll', localPassport.authenticate('jwt', { session: false }))
   private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
     const response = await this.userinfoService.findAll();
     if (response) {
