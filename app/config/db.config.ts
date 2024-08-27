@@ -21,7 +21,7 @@ const dbConfig: DbConfig = {
   HOST: "localhost",
   USER: process.env.DB_USERNAME,
   PASSWORD: process.env.DB_PASSWORD,
-  DB: "custweb",
+  DB: "socialmediajs",
   dialect: "mysql",
   pool: {
     max: 5,

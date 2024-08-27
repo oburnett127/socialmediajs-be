@@ -5,33 +5,24 @@ import { Container } from 'inversify';
 import express from 'express';
 import cors from "cors";
 import passport from '../passportext.js';
-import { JobService } from './service/job.js';
-import { StakeholderService } from './service/stakeholder.js';
-import { UserinfoService } from './service/userinfo.js';
-import { ProductService } from './service/product.js';
-import { CartService } from './service/cart.js';
-import { CartProductService } from './service/cartProduct.js'
-import { CategoryService } from './service/category.js';
-import { OrderService } from './service/order.js';
-import { OrderProductService } from './service/orderProduct.js';
-import { PaymentService } from './service/payment.js';
+import { CommentService } from './service/comment.js';
+import { FriendService } from './service/friend.js';
+import { JwtService } from './service/jwt.js';
+import { LogoutService } from './service/logout.js';
+import { PostService } from './service/post.js';
+import { UserinfoService } from './service/userinfo.js'
 import db from './models/index.js';
 import { TYPES } from './service/types.js';
 import logger from './config/logger.js';
 import sequelize from './models/index.js';
 
 let container = new Container();
-container.bind<JobService>(TYPES.JobService).to(JobService);
-container.bind<StakeholderService>(TYPES.StakeholderService).to(StakeholderService);
+container.bind<CommentService>(TYPES.CommentService).to(CommentService);
+container.bind<FriendService>(TYPES.FriendService).to(FriendService);
+container.bind<JwtService>(TYPES.JwtService).to(JwtService);
+container.bind<LogoutService>(TYPES.LogoutService).to(LogoutService);
+container.bind<PostService>(TYPES.PostService).to(PostService);
 container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService);
-container.bind<ProductService>(TYPES.ProductService).to(ProductService);
-container.bind<CartService>(TYPES.CartService).to(CartService);
-container.bind<CartProductService>(TYPES.CartProductService).to(CartProductService);
-container.bind<CategoryService>(TYPES.CategoryService).to(CategoryService);
-container.bind<OrderService>(TYPES.OrderService).to(OrderService);
-container.bind<OrderProductService>(TYPES.OrderProductService).to(OrderProductService);
-container.bind<PaymentService>(TYPES.PaymentService).to(PaymentService);
-
 
 container.bind(TYPES.Database).toConstantValue(db);
 
@@ -48,16 +39,12 @@ server.setConfig((app) => {
   app.use(passport.initialize());
 });
 
-import './controllers/job.js';
-import './controllers/stakeholder.js';
+import './controllers/comment.js';
+import './controllers/friend.js';
+import './controllers/jwt.js';
+import './controllers/logout.js';
+import './controllers/post.js';
 import './controllers/userinfo.js';
-import './controllers/product.js';
-import './controllers/cart.js';
-import './controllers/cartProduct.js';
-import './controllers/category.js';
-import './controllers/order.js';
-import './controllers/orderProduct.js';
-import './controllers/payment.js';
 
 sequelize.sync()
   .then(() => console.log('Database synchronized'))

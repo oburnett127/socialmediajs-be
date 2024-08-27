@@ -1,16 +1,10 @@
 import { Sequelize } from "sequelize-typescript";
 import dbConfig from "../config/db.config.js";
-import { Job } from "./job.model.js";
-import { Stakeholder } from "./stakeholder.model.js";
+import { Comment } from "./comment.model.js";
+import { Friend } from "./friend.model.js";
+import { Post } from "./post.model.js";
+import { RefreshToken } from "./refreshtoken.model.js"
 import { Userinfo } from "./userinfo.model.js";
-import { RefreshToken } from "./refreshtoken.model.js";
-import { Cart } from "./friend.model.js";
-import { Product } from "./product.model.js";
-import { CartProduct } from "./cartProduct.model.js";
-import { Payment } from "./payment.model.js";
-import { OrderProduct } from "./orderProduct.model.js";
-import { Order } from "./order.model.js";
-import { Category } from "./category.model.js";
 
 const sequelize = new Sequelize({
   database: dbConfig.DB,
@@ -19,8 +13,7 @@ const sequelize = new Sequelize({
   host: dbConfig.HOST,
   dialect: 'mysql',
   logging: console.log,
-  models: [Userinfo, Job, Stakeholder, RefreshToken, Product, Cart, CartProduct, 
-    Category, Order, OrderProduct, Payment],
+  models: [Comment, Friend, Post, RefreshToken, Userinfo],
 });
 
 export default sequelize;
