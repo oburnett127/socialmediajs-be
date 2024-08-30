@@ -2,7 +2,8 @@ import { controller, httpDelete, httpGet, httpPost, interfaces, request, request
 import { inject } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
-import { FriendPayload, FriendRequestPayload, FriendStatusRequestPayload, FriendService } from '../service/friend.js';
+import { FriendPayload, FriendRequestPayload, FriendStatusRequestPayload, FriendDeletePayload, FriendService } from '../service/friend.js';
+import { UserinfoService } from 'app/service/userinfo.js';
 import { TYPES } from '../service/types.js';
 
 @controller('/friend')
@@ -28,14 +29,14 @@ export class FriendController implements interfaces.Controller {
 
   @httpPost('/accept', localPassport.authenticate('jwt', { session: false}))
   private async acceptFriend(@request() req: express.Request, @response() res: express.Response): Promise<void> {
-    const friendRequest: FriendRequestPayload = req.body;
-    if (!friendRequest) {
-      res.sendStatus(400);
-    }
-    const requestAccepted = await this.friendService.acceptFriend(friendRequest);
-    if (requestAccepted) {
+    try {
+      const friendRequest: FriendRequestPayload = req.body;
+      if (!friendRequest) {
+        res.sendStatus(400);
+      }
+      await this.friendService.acceptFriend(friendRequest);
       res.sendStatus(200);
-    } else {
+    } catch(err: any) {
       res.sendStatus(500);
     }
   }
@@ -46,7 +47,7 @@ export class FriendController implements interfaces.Controller {
     if (!friendStatusRequest) {
       res.sendStatus(400);
     }
-    const response = await this.friendService.getFriendStatus(friendStatusRequest);
+    const response = await this.friendService.getFriendStatus(friendStatusRequest.loggedInUserId, friendStatusRequest.otherUserId);
     if (response) {
       res.status(200)
       res.send(response);
@@ -61,8 +62,8 @@ export class FriendController implements interfaces.Controller {
     if (!id) {
       res.sendStatus(400);
     }
-    const friendUserIds = await this.friendService.getFriendUserIds();
-    const response = userService.getUsers(friendUserIds);
+    const friendUserIds = await this.friendService.getFriendUserIds(id);
+    const response = UserinfoService.getUsers(friendUserIds);
     if (response) {
       res.status(200)
       res.send(response);
@@ -77,8 +78,8 @@ export class FriendController implements interfaces.Controller {
     if (!id) {
       res.sendStatus(400);
     }
-    const toUserIds = await this.friendService.getOutgoingRequestsByUserId();
-    const response = userService.getUsers(toUserIds);
+    const toUserIds = await this.friendService.getOutgoingRequestsByUserId(id);
+    const response = UserinfoService.getUsers(toUserIds);
     if (response) {
       res.status(200)
       res.send(response);
@@ -94,7 +95,7 @@ export class FriendController implements interfaces.Controller {
       res.sendStatus(400);
     }
     const fromUserIds = await this.friendService.getIncomingRequestsByUserId(toUserId);
-    const response = userService.getUsers(fromUserIds);
+    const response = UserinfoService.getUsers(fromUserIds);
     if (response) {
       res.status(200)
       res.send(response);

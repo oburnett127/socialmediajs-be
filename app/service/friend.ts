@@ -16,48 +16,67 @@ export interface FriendPayload {
     status: string;
 }
 
+export interface FriendStatusRequestPayload {
+    loggedInUserId: number;
+    otherUserId: number;
+}
+
+export interface FriendDeletePayload {
+    userId1: number;
+    userId2: number;
+}
+
 @injectable()
 export class FriendService {
 
     public async requestFriend(friend: FriendPayload): Promise<Friend | void> {
-    return Friend.create(friend as any)
-        .then((data: any) => data)
-        .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
-    }
+        return Friend.create(friend as any)
+            .then((data: any) => data)
+            .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
+        }
 
     public async getFriendsByPostId(postId: number): Promise<Friend[] | void> {
-    return Friend.findAll({ where: { postId: postId } })
-        .then((data: any) => data)
-        .catch((err: any) => { logger.error(err.message); throw err; });
+        return Friend.findAll({ where: { postId: postId } })
+            .then((data: any) => data)
+            .catch((err: any) => { logger.error(err.message); throw err; });
     }
 
-    public async deleteFriend(friendId: number): Promise<void | number> {
-    return Friend.destroy({ where: { friendId: friendId } })
-        .then((num: number) => num)
-        .catch((err: any) => { logger.error(err.message); throw err });
+    public async deleteFriend(friendDeleteRequest: FriendDeletePayload): Promise<void | number> {
+        try{
+            const deletedCount = await Friend.destroy({ where: { fromUserId: friendDeleteRequest.userId1,
+                                                                    toUserId: friendDeleteRequest.userId2
+                                                                }
+                                                        })
+            if(deletedCount ===0) {
+                await Friend.destroy ({ where: {fromUserId: friendDeleteRequest.userId2,
+                                                touserId: friendDeleteRequest.userId1 }});}
+        } catch(err: any) { 
+            logger.error(err.message); 
+            throw err;
+        }      
     }
 
     public async getFriendStatus(profileUserId: number, loggedInUserId: number): Promise<boolean> {
-    try {
-        const friend1 = await Friend.findOne({
-            where: {
-                fromUserId: loggedInUserId,
-                toUserId: profileUserId
-            }
-        });
+        try {
+            const friend1 = await Friend.findOne({
+                where: {
+                    fromUserId: loggedInUserId,
+                    toUserId: profileUserId
+                }
+            });
 
-        const friend2 = await Friend.findOne({
-            where: {
-                fromUserId: profileUserId,
-                toUserId: loggedInUserId
-            }
-        });
+            const friend2 = await Friend.findOne({
+                where: {
+                    fromUserId: profileUserId,
+                    toUserId: loggedInUserId
+                }
+            });
 
-        return !!friend1 || !!friend2;
-    } catch (err: any) {
-        logger.error(err.message);
-        throw err;
-    }
+            return !!friend1 || !!friend2;
+        } catch (err: any) {
+            logger.error(err.message);
+            throw err;
+        }
     }
 
     public async getFriendUserIds(userId: number): Promise<number[]> {
@@ -121,19 +140,25 @@ export class FriendService {
         }
     }
 
-    public async acceptFriend(friendRequest: FriendRequestPayload) {
+    public async acceptFriend(friendRequest: FriendRequestPayload): Promise<void> {
         const fromUserId = friendRequest.fromUserId;
         const toUserId = friendRequest.toUserId;
-        const friendRec = await Friend.findOne({
-            where: {
-                fromUserId: fromUserId,
-                toUserId: toUserId
+
+        try {
+            const friendRec = await Friend.findOne({
+                where: {
+                    fromUserId: fromUserId,
+                    toUserId: toUserId
+                }
+            });
+            if(friendRec) {
+                friendRec.dataValues.status = FriendStatus.ACCEPTED;
+                await friendRec.save();
+
             }
-        });
-        if(!!friendRec) {
-            friendRec.dataValues.status = FriendStatus.ACCEPTED;
-            this.requestFriend(friendRec);
+        } catch (error) {
+            console.error('Error accepting friend request:', error);
+            throw error;
         }
     }
-
 }
