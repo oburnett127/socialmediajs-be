@@ -2,7 +2,7 @@ import { controller, httpDelete, httpGet, httpPost, interfaces, request, request
 import { inject } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
-import { FriendPayload, FriendService } from '../service/friend.js';
+import { FriendPayload, FriendRequestPayload, FriendStatusRequestPayload, FriendService } from '../service/friend.js';
 import { TYPES } from '../service/types.js';
 
 @controller('/friend')

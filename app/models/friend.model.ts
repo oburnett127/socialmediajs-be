@@ -1,9 +1,10 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, ForeignKey } from 'sequelize-typescript';
 import { Userinfo } from './userinfo.model.js';
 
-enum FriendStatus {
-  FRIEND = "friend",
-  PENDING = "pending",
+export enum FriendStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  REJECTED = 'REJECTED'
 }
 
 @Table
@@ -32,9 +33,9 @@ export class Friend extends Model {
   private toUserId!: number;
  
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM('PENDING', 'ACCEPTED', 'REJECTED'),
     allowNull: false,
   })  
-  private orderStatus!: string;
+  private status!: string;
 
 }

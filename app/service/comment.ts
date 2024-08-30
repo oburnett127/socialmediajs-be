@@ -11,13 +11,13 @@ export interface CommentPayload {
 @injectable()
 export class CommentService {
 
-  public async create(comment: Comment): Promise<Comment | void> {
+  public async create(comment: CommentPayload): Promise<Comment | void> {
     return Comment.create(comment as any)
       .then((data: any) => data)
       .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
   }
 
-  public async findCommentsByPostId(postId: number): Promise<Comment[] | void> {
+  public async getCommentsByPostId(postId: number): Promise<Comment[] | void> {
     return Comment.findAll({ where: { postId: postId } })
       .then((data: any) => data)
       .catch((err: any) => { logger.error(err.message); throw err; });

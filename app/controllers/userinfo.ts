@@ -141,8 +141,8 @@ export class UserinfoController implements interfaces.Controller {
     });
   }
 
-  @httpGet('/findAll', localPassport.authenticate('jwt', { session: false }))
-  private async findAll(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
+  @httpGet('/getAllUsers', localPassport.authenticate('jwt', { session: false }))
+  private async getAllUsers(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
     const response = await this.userinfoService.findAll();
     if (response) {
       res.status(200)
@@ -152,13 +152,13 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/findOne/:id', localPassport.authenticate('jwt', { session: false}))
-  private async findOne(@requestParam('id') id: string, @response() res: express.Response): Promise<void> {
-    if (!id) {
+  @httpGet('/getuserbyuserid/:userId', localPassport.authenticate('jwt', { session: false}))
+  private async getUserByUserId(@requestParam('userId') userId: string, @response() res: express.Response): Promise<void> {
+    if (!userId) {
       res.sendStatus(400);
     }
 
-    const response = await this.userinfoService.findOne(id);
+    const response = await this.userinfoService.getUserByUserId(userId);
     if (response) {
       res.status(200);
       res.send(response);
@@ -167,13 +167,58 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
 
-  @httpGet('/findByEmail/:email', localPassport.authenticate('jwt', { session: false}))
-  private async findByEmail(@requestParam('email') email: string, @response() res: express.Response): Promise<void> {
+  @httpGet('/getuseridbyemail/:email', localPassport.authenticate('jwt', { session: false}))
+  private async getUserIdByEmail(@requestParam('email') email: string, @response() res: express.Response): Promise<void> {
+    if (!email) {
+      res.sendStatus(400);
+    }
+
+    const response = await this.userinfoService.getUserIdByEmail(email);
+    if (response) {
+      res.status(200);
+      res.send(response);
+    } else {
+      res.sendStatus(400);
+    }
+  }
+
+  @httpGet('/getuserbyemail/:email', localPassport.authenticate('jwt', { session: false}))
+  private async getUserByEmail(@requestParam('email') email: string, @response() res: express.Response): Promise<void> {
     if (!email) {
       res.sendStatus(400);
     }
 
     const response = await this.userinfoService.findByEmail(email);
+    if (response) {
+      res.status(200);
+      res.send(response);
+    } else {
+      res.sendStatus(400);
+    }
+  }
+
+  @httpGet('/getrolebyuserid/:userId', localPassport.authenticate('jwt', { session: false}))
+  private async getRoleByUserId(@requestParam('userId') userId: string, @response() res: express.Response): Promise<void> {
+    if (!userId) {
+      res.sendStatus(400);
+    }
+
+    const response = await this.userinfoService.getRoleByUserId(userId);
+    if (response) {
+      res.status(200);
+      res.send(response);
+    } else {
+      res.sendStatus(400);
+    }
+  }
+
+  @httpGet('/getusersbyname/:name', localPassport.authenticate('jwt', { session: false}))
+  private async getUsersByName(@requestParam('name') name: string, @response() res: express.Response): Promise<void> {
+    if (!name) {
+      res.sendStatus(400);
+    }
+
+    const response = await this.userinfoService.getUsersByName(name);
     if (response) {
       res.status(200);
       res.send(response);
