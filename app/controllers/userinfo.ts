@@ -58,8 +58,8 @@ export class UserinfoController implements interfaces.Controller {
         return;
       }
       
-      const userInfo = await UserinfoService.findByEmail(loginInfo.email);
-      const userAuthorized = await UserinfoService.login(loginInfo);
+      const userInfo = await this.userinfoService.getUserByEmail(loginInfo.email);
+      const userAuthorized = await this.userinfoService.login(loginInfo);
 
       logger.info('userAuthorized is: ' + userAuthorized);
   
@@ -105,12 +105,12 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.findByEmail(userinfo.email);
+    const response = await this.userinfoService.getUserByEmail(userinfo.email);
     
     if (response) {
       res.sendStatus(409);
     } else {
-      const createUserinfo = await UserinfoService.create(userinfo);
+      const createUserinfo = await this.userinfoService.create(userinfo);
       
       if (createUserinfo) {
         res.sendStatus(200);
@@ -143,7 +143,7 @@ export class UserinfoController implements interfaces.Controller {
 
   @httpGet('/getAllUsers', localPassport.authenticate('jwt', { session: false }))
   private async getAllUsers(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
-    const response = await UserinfoService.findAll();
+    const response = await this.userinfoService.findAll();
     if (response) {
       res.status(200)
       res.send(response);
@@ -158,22 +158,7 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.getUserByUserId(userId);
-    if (response) {
-      res.status(200);
-      res.send(response);
-    } else {
-      res.sendStatus(400);
-    }
-  }
-
-  @httpGet('/getuseridbyemail/:email', localPassport.authenticate('jwt', { session: false}))
-  private async getUserIdByEmail(@requestParam('email') email: string, @response() res: express.Response): Promise<void> {
-    if (!email) {
-      res.sendStatus(400);
-    }
-
-    const response = await UserinfoService.getUserIdByEmail(email);
+    const response = await this.userinfoService.getUserByUserId(userId);
     if (response) {
       res.status(200);
       res.send(response);
@@ -188,7 +173,7 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.findByEmail(email);
+    const response = await this.userinfoService.getUserByEmail(email);
     if (response) {
       res.status(200);
       res.send(response);
@@ -203,7 +188,7 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.getRoleByUserId(userId);
+    const response = await this.userinfoService.getRoleByUserId(userId);
     if (response) {
       res.status(200);
       res.send(response);
@@ -218,7 +203,7 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.getUsersByName(name);
+    const response = await this.userinfoService.getUsersByName(name);
     if (response) {
       res.status(200);
       res.send(response);
@@ -234,7 +219,7 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.update(userinfo, id);
+    const response = await this.userinfoService.update(userinfo, id);
     if (response) {
       res.sendStatus(200);
     } else {
@@ -248,7 +233,7 @@ export class UserinfoController implements interfaces.Controller {
       res.sendStatus(400);
     }
 
-    const response = await UserinfoService.deleteUserinfo(id);
+    const response = await this.userinfoService.deleteUserinfo(id);
     if (response) {
       res.sendStatus(200);
     } else {
@@ -258,7 +243,7 @@ export class UserinfoController implements interfaces.Controller {
 
   @httpDelete('/deleteAll', localPassport.authenticate('jwt', { session: false}))
   private async deleteAll(@request() req: express.Request, @response() res: express.Response): Promise<void> {
-    const response = await UserinfoService.deleteAll();
+    const response = await this.userinfoService.deleteAll();
     if (response) {
       res.sendStatus(200);
     } else {

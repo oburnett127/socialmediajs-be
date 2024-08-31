@@ -15,11 +15,9 @@ export class CommentController implements interfaces.Controller {
   @httpPost('/create', localPassport.authenticate('jwt', { session: false}))
   private async createComment(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const comment: CommentPayload = req.body;
-
     if (!comment) {
       res.sendStatus(400);
     }
-
     const createComment = await this.commentService.create(comment);
     if (createComment) {
       res.sendStatus(200);
@@ -29,8 +27,11 @@ export class CommentController implements interfaces.Controller {
   }
 
   @httpGet('/getbypost/:postId', localPassport.authenticate('jwt', { session: false}))
-  private async getCommentsByPostId(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
-    const response = await this.commentService.getCommentsByPostId();
+  private async getCommentsByPostId(@requestParam('id') id: number, @response() res: express.Response) : Promise<void> {
+    if (!id) {
+      res.sendStatus(400);
+    }
+    const response = await this.commentService.getCommentsByPostId(id);
     if (response) {
       res.status(200)
       res.send(response);

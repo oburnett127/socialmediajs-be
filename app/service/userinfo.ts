@@ -3,6 +3,7 @@ import { Userinfo } from '../models/userinfo.model.js';
 import logger from '../config/logger.js';
 import { RefreshToken } from '../models/refreshtoken.model.js';
 import bcrypt from 'bcryptjs';
+import { Op } from 'sequelize';
 
 export interface UserinfoPayload {
   email: string;
@@ -94,13 +95,13 @@ export class UserinfoService {
       .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
   }
 
-  public async findOne(id: string): Promise<Userinfo | void> {
+  public async getUserByUserId(id: string): Promise<Userinfo | void> {
     return Userinfo.findByPk(id)
       .then((data: any) => data)
       .catch((err: any) => {logger.error(err.message); throw err; });
   }
 
-  public async findByEmail(email: string): Promise<Userinfo | void> {
+  public async getUserByEmail(email: string): Promise<Userinfo | void> {
     return Userinfo.findOne({
       where: { email: email },
     })
@@ -127,5 +128,68 @@ export class UserinfoService {
     })
       .then((nums: any) => nums)
       .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
+  }
+
+  public async getUsersByName(name: string): Promise<Userinfo[] | null> {
+      const nameParts = name.split(' ');
+
+      try {
+          if (nameParts.length === 2) {
+              const [firstName, lastName] = nameParts;
+
+              // Find users by full name (first and last name)
+              const users = await Userinfo.findAll({
+                  where: {
+                      firstName: firstName,
+                      lastName: lastName
+                  }
+              }) as Userinfo[];
+              
+              const reverseOrderUsers = await Userinfo.findAll({
+                  where: {
+                    lastName: firstName,
+                    firstName: lastName
+                  }
+              }) as Userinfo[];
+
+              const combinedUsers = [...users, ...reverseOrderUsers];
+
+              return combinedUsers;
+          } else if (nameParts.length === 1) {
+              const providedName = nameParts[0];
+
+              const matchingUsers = await Userinfo.findAll({
+                  where: {
+                      [Op.or]: [
+                          { firstName: providedName },
+                          { lastName: providedName }
+                      ]
+                  }
+              }) as Userinfo[];
+
+              return matchingUsers;
+          }
+
+          return null;
+
+      } catch (error) {
+          console.error('Error fetching users by name:', error);
+          throw error;
+      }
+  }
+
+  public async getRoleByUserId(userId: string): Promise<string> {
+    try {
+      const userinfo = await Userinfo.findOne({
+        where: {  userId: userId  }
+      })
+      if(!userinfo) return "";
+      else {
+        return userinfo.dataValues.roles;
+      }
+    } catch(err: any) {
+      logger.error(err.message);
+      throw err;
+    }
   }
 }

@@ -2,7 +2,7 @@ import { controller, httpDelete, httpGet, httpPost, interfaces, request, request
 import { inject } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
-import { PostPayload, PostService } from '../service/post.js';
+import { PostService, PostPayload }  from '../service/post.js';
 import { TYPES } from '../service/types.js';
 
 @controller('/post')
@@ -27,7 +27,7 @@ export class PostController implements interfaces.Controller {
   }
 
   @httpGet('/getonepost/:postId', localPassport.authenticate('jwt', { session: false}))
-  private async getOnePost(@requestParam('postId') postId: number, @response() res: express.Response) : Promise<void> {
+  private async getOnePost(@requestParam('postId') postId: number, @response() res: express.Response): Promise<void> {
     if (!postId) {
       res.sendStatus(400);
     }
@@ -73,7 +73,6 @@ export class PostController implements interfaces.Controller {
     if (!id) {
       res.sendStatus(400);
     }
-
     const response = await this.postService.deletePost(id);
     if (response) {
       res.sendStatus(200);
