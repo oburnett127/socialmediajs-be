@@ -1,164 +1,110 @@
-import { injectable } from 'inversify';
-import { Friend, FriendStatus } from '../models/friend.model.js';
+import { inject, injectable } from 'inversify';
+import { Post } from '../models/post.model.js';
 import logger from '../config/logger.js';
-import { EnumDataType } from 'sequelize';
-import { EnumType } from 'typescript';
+import { rabbitTemplate } from '../config/rabbittemplate.js';
+import { Transaction } from 'sequelize';
+import { UserinfoService } from './userinfo.js';
+import { FriendService } from './friend.js';
 
-export interface FriendRequestPayload {
-    fromUserId: number;
-    toUserId: number;
-}
-
-export interface FriendPayload {
-    id: number;
-    fromUserId: number;
-    toUserId: number;
-    status: string;
-}
-
-export interface FriendStatusRequestPayload {
-    loggedInUserId: number;
-    otherUserId: number;
-}
-
-export interface FriendDeletePayload {
-    userId1: number;
-    userId2: number;
+export interface PostPayload {
+    postId: number;
+    authorUserId: number;
+    profileUserId: number;
+    text: string;
 }
 
 @injectable()
 export class PostService {
 
-    public async requestFriend(friend: FriendPayload): Promise<Friend | void> {
-        return Friend.create(friend as any)
-            .then((data: any) => data)
-            .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
-        }
+    constructor(
+        @inject(UserinfoService) private userinfoService: UserinfoService,
+        @inject(FriendService) private friendService: FriendService
+    ) {}
 
-    public async getFriendsByPostId(postId: number): Promise<Friend[] | void> {
-        return Friend.findAll({ where: { postId: postId } })
-            .then((data: any) => data)
-            .catch((err: any) => { logger.error(err.message); throw err; });
-    }
-
-    public async deleteFriend(friendDeleteRequest: FriendDeletePayload): Promise<void | number> {
-        try{
-            const deletedCount = await Friend.destroy({ where: { fromUserId: friendDeleteRequest.userId1,
-                                                                    toUserId: friendDeleteRequest.userId2
-                                                                }
-                                                        })
-            if(deletedCount ===0) {
-                await Friend.destroy ({ where: {fromUserId: friendDeleteRequest.userId2,
-                                                touserId: friendDeleteRequest.userId1 }});}
-        } catch(err: any) { 
-            logger.error(err.message); 
-            throw err;
-        }      
-    }
-
-    public async getFriendStatus(profileUserId: number, loggedInUserId: number): Promise<boolean> {
+    public async getOnePost(id: number): Promise<Post | null> {
         try {
-            const friend1 = await Friend.findOne({
-                where: {
-                    fromUserId: loggedInUserId,
-                    toUserId: profileUserId
-                }
+            const post: Post | null = await Post.findOne({
+                where: { postId: id }
             });
-
-            const friend2 = await Friend.findOne({
-                where: {
-                    fromUserId: profileUserId,
-                    toUserId: loggedInUserId
-                }
-            });
-
-            return !!friend1 || !!friend2;
+            return post;
         } catch (err: any) {
             logger.error(err.message);
             throw err;
         }
     }
 
-    public async getFriendUserIds(userId: number): Promise<number[]> {
-        const friendUserIds = new Set<number>();
-
+    public async getPostsByAuthorUserId(id: number): Promise<Post[] | null> {
         try {
-            const friendRecsFrom = await Friend.findAll({
-                where: {
-                    fromUserId: userId,
-                    status: 'FRIEND'
-                }
+            const posts: Post[] | null = await Post.findAll({
+                where: { authorUserId: id }
             });
-
-            friendRecsFrom.forEach(friend => friendUserIds.add(friend.dataValues.toUserId));
-
-            const friendRecsTo = await Friend.findAll({
-                where: {
-                    toUserId: userId,
-                    status: 'FRIEND'
-                }
-            });
-
-            friendRecsTo.forEach(friend => friendUserIds.add(friend.dataValues.fromUserId));
-            friendUserIds.delete(userId);
-            return Array.from(friendUserIds);
+            return posts;
         } catch (err: any) {
-            console.error(err.message);
+            logger.error(err.message);
             throw err;
         }
     }
 
-    public async getOutgoingRequestsByUserId(fromUserId: number): Promise<number[]> {
+    public async getPostsByProfileUserId(id: number): Promise<Post[] | null> {
         try {
-            const friendRecs = await Friend.findAll({
-                where: {
-                    fromUserId: fromUserId,
-                    status: FriendStatus.PENDING
-                }
+            const posts: Post[] | null = await Post.findAll({
+                where: { profileUserId: id }
             });
-
-            return friendRecs.map(friend => friend.dataValues.toUserId);
-        } catch (error) {
-            console.error('Error fetching outgoing requests:', error);
-            throw error;
-        }
-    } 
-    
-    public async getIncomingRequestsByUserId(toUserId: number): Promise<number[]> {
-        try {
-            const friendRecs = await Friend.findAll({
-                where: {
-                    fromUserId: toUserId,
-                    status: FriendStatus.PENDING
-                }
-            });
-
-            return friendRecs.map(friend => friend.dataValues.fromUserId);
-        } catch (error) {
-            console.error('Error fetching incoming requests:', error);
-            throw error;
+            return posts;
+        } catch (err: any) {
+            logger.error(err.message);
+            throw err;
         }
     }
 
-    public async acceptFriend(friendRequest: FriendRequestPayload): Promise<void> {
-        const fromUserId = friendRequest.fromUserId;
-        const toUserId = friendRequest.toUserId;
-
+    public async createPost(post: Post, transaction?: Transaction): Promise<Boolean> {
         try {
-            const friendRec = await Friend.findOne({
-                where: {
-                    fromUserId: fromUserId,
-                    toUserId: toUserId
-                }
-            });
-            if(friendRec) {
-                friendRec.dataValues.status = FriendStatus.ACCEPTED;
-                await friendRec.save();
+            // Begin transaction if one isn't provided
+            const transactionInstance = transaction || await Post.sequelize!.transaction();
 
+            // Save the post
+            await Post.create(post.dataValues.text, { transaction: transactionInstance });
+
+            // Fetch the user information
+            const user = await this.userinfoService.getUserByUserId(post.dataValues.authorUserId);
+            if (!user) {
+                throw new Error(`User with id ${post.dataValues.authorUserId} not found`);
             }
+
+            const message = `${user.dataValues.firstName} ${user.dataValues.lastName} made a new post`;
+
+            // Get the friend user IDs
+            const friendUserIds = await this.friendService.getFriendUserIds(post.dataValues.authorUserId);
+
+            // Send the message to RabbitMQ for each friend
+            for (const userId of friendUserIds) {
+                const queueName = `user_queue_${userId}`;
+                console.log(`Queue name is: ${queueName}`);
+                rabbitTemplate.convertAndSend('post_exchange', queueName, message);
+            }
+
+            // Commit the transaction if it was created inside this method
+            if (!transaction) {
+                await transactionInstance.commit();
+            }
+
+            return true;
         } catch (error) {
-            console.error('Error accepting friend request:', error);
+            if (transaction) {
+                await transaction.rollback();
+            }
+            console.error('Error in createPost:', error);
             throw error;
         }
     }
+
+    public async deletePost(id: number): Promise<void | number> {
+        try{
+            await Post.destroy({ where: { postId: id } })
+        } catch(err: any) { 
+            logger.error(err.message); 
+            throw err;
+        }      
+    }
+
 }

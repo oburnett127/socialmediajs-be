@@ -1,8 +1,6 @@
 import { injectable } from 'inversify';
 import { Friend, FriendStatus } from '../models/friend.model.js';
 import logger from '../config/logger.js';
-import { EnumDataType } from 'sequelize';
-import { EnumType } from 'typescript';
 
 export interface FriendRequestPayload {
     fromUserId: number;
@@ -47,7 +45,7 @@ export class FriendService {
                                                                     toUserId: friendDeleteRequest.userId2
                                                                 }
                                                         })
-            if(deletedCount ===0) {
+            if(deletedCount === 0) {
                 await Friend.destroy ({ where: {fromUserId: friendDeleteRequest.userId2,
                                                 touserId: friendDeleteRequest.userId1 }});}
         } catch(err: any) { 
