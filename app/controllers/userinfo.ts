@@ -1,5 +1,5 @@
 import { controller, httpDelete, httpGet, httpPost, httpPut, interfaces, request, requestParam, response } from 'inversify-express-utils';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
 import jwt, { Secret } from 'jsonwebtoken';
@@ -41,10 +41,13 @@ const generateRefreshToken = async (userId: number) => {
 
 @controller('/userinfo')
 export class UserinfoController implements interfaces.Controller {
-
+  private userinfoService: UserinfoService;
+  
   constructor(
-    @inject(TYPES.UserinfoService) private userinfoService: UserinfoService
-  ) { }
+    @inject(TYPES.UserinfoService) userinfoService: UserinfoService
+  ) {
+    this.userinfoService = userinfoService;
+  }
 
   @httpPost('/login')
   private async login(@request() req: express.Request, @response() res: express.Response): Promise<void> {

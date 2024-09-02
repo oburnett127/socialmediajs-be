@@ -1,5 +1,5 @@
 import { controller, httpDelete, httpGet, httpPost, interfaces, request, requestParam, response } from 'inversify-express-utils';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { CommentPayload, CommentService } from '../service/comment.js';
@@ -7,10 +7,11 @@ import { TYPES } from '../service/types.js';
 
 @controller('/comment')
 export class CommentController implements interfaces.Controller {
+  private commentService: CommentService;
 
-  constructor(
-    @inject(TYPES.CommentService) private commentService: CommentService
-  ) { }
+  constructor(@inject(TYPES.CommentService) commentService: CommentService) {
+    this.commentService = commentService;
+  }
 
   @httpPost('/create', localPassport.authenticate('jwt', { session: false}))
   private async createComment(@request() req: express.Request, @response() res: express.Response): Promise<void> {

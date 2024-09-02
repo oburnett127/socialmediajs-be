@@ -14,7 +14,7 @@ import { TYPES } from './service/types.js';
 import logger from './config/logger.js';
 import sequelize from './models/index.js';
 
-let container = new Container();
+const container = new Container();
 container.bind<CommentService>(TYPES.CommentService).to(CommentService);
 container.bind<FriendService>(TYPES.FriendService).to(FriendService);
 container.bind<PostService>(TYPES.PostService).to(PostService);
@@ -22,7 +22,9 @@ container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService);
 
 container.bind(TYPES.Database).toConstantValue(db);
 
-let server = new InversifyExpressServer(container);
+export { container };
+
+const server = new InversifyExpressServer(container);
 
 server.setConfig((app) => {
   app.use(express.urlencoded({ extended: true }));

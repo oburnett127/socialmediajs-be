@@ -1,5 +1,5 @@
 import { controller, httpDelete, httpGet, httpPost, interfaces, request, requestParam, response } from 'inversify-express-utils';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { PostService }  from '../service/post.js';
@@ -8,10 +8,13 @@ import { TYPES } from '../service/types.js';
 
 @controller('/post')
 export class PostController implements interfaces.Controller {
+  private postService: PostService;
 
   constructor(
-    @inject(TYPES.PostService) private postService: PostService
-  ) { }
+    @inject(TYPES.PostService) postService: PostService
+  ) {
+    this.postService = postService;
+  }
 
   @httpPost('/create', localPassport.authenticate('jwt', { session: false}))
   private async createPost(@request() req: express.Request, @response() res: express.Response): Promise<void> {

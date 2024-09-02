@@ -13,7 +13,7 @@ const sequelize = new Sequelize({
   host: dbConfig.HOST,
   dialect: 'mysql',
   logging: console.log,
-  models: [Comment, Friend, Post, RefreshToken, Userinfo],
+  models: [Comment, Friend, Post, Userinfo, RefreshToken],
 });
 
 export default sequelize;

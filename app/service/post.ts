@@ -5,6 +5,7 @@ import { rabbitTemplate } from '../config/rabbittemplate.js';
 import { Transaction } from 'sequelize';
 import { UserinfoService } from './userinfo.js';
 import { FriendService } from './friend.js';
+import { TYPES } from './types.js';
 
 export interface PostPayload {
     postId: number;
@@ -17,8 +18,8 @@ export interface PostPayload {
 export class PostService {
 
     constructor(
-        @inject(UserinfoService) private userinfoService: UserinfoService,
-        @inject(FriendService) private friendService: FriendService
+        @inject(TYPES.UserinfoService) private userinfoService: UserinfoService,
+        @inject(TYPES.FriendService) private friendService: FriendService
     ) {}
 
     public async getOnePost(id: number): Promise<Post | null> {

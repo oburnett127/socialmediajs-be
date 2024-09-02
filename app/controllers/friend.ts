@@ -1,5 +1,5 @@
 import { controller, httpDelete, httpGet, httpPost, interfaces, request, requestParam, response } from 'inversify-express-utils';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import * as express from 'express';
 import localPassport from '../../passportext.js';
 import { FriendPayload, FriendRequestPayload, FriendStatusRequestPayload, FriendDeletePayload, FriendService } from '../service/friend.js';
@@ -8,11 +8,16 @@ import { TYPES } from '../service/types.js';
 
 @controller('/friend')
 export class FriendController implements interfaces.Controller {
+  private friendService: FriendService;
+  private userinfoService: UserinfoService;
 
   constructor(
-    @inject(TYPES.FriendService) private friendService: FriendService,
-    @inject(TYPES.UserinfoService) private userinfoService: UserinfoService
-  ) { }
+    @inject(TYPES.FriendService) friendService: FriendService,
+    @inject(TYPES.UserinfoService) userinfoService: UserinfoService
+  ) {
+    this.friendService = friendService;
+    this.userinfoService = userinfoService;
+   }
 
   @httpPost('/request', localPassport.authenticate('jwt', { session: false}))
   private async requestFriend(@request() req: express.Request, @response() res: express.Response): Promise<void> {
