@@ -1,9 +1,7 @@
 import { Model, Table, Column, PrimaryKey, ForeignKey, DataType, AutoIncrement, AllowNull, BelongsTo } from 'sequelize-typescript';
 import { Userinfo } from './userinfo.model.js';
 
-@Table({
-    modelName: 'refreshtoken',
-})
+@Table
 export class RefreshToken extends Model {
     @PrimaryKey
     @AutoIncrement

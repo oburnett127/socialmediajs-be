@@ -141,17 +141,6 @@ export class UserinfoController implements interfaces.Controller {
     });
   }
 
-  @httpGet('/getAllUsers', localPassport.authenticate('jwt', { session: false }))
-  private async getAllUsers(@request() req: express.Request, @response() res: express.Response) : Promise<void> {
-    const response = await this.userinfoService.findAll();
-    if (response) {
-      res.status(200)
-      res.send(response);
-    } else {
-      res.sendStatus(500);
-    }
-  }
-
   @httpGet('/getuserbyuserid/:userId', localPassport.authenticate('jwt', { session: false}))
   private async getUserByUserId(@requestParam('userId') userId: string, @response() res: express.Response): Promise<void> {
     if (!userId) {

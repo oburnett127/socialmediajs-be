@@ -1,4 +1,3 @@
-// config/rabbitmqConfig.ts
 export const rabbitmqConfig = {
     protocol: 'amqp',
     hostname: 'localhost',

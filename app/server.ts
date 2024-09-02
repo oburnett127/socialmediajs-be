@@ -7,8 +7,6 @@ import cors from "cors";
 import passport from '../passportext.js';
 import { CommentService } from './service/comment.js';
 import { FriendService } from './service/friend.js';
-import { JwtService } from './service/jwt.js';
-import { LogoutService } from './service/logout.js';
 import { PostService } from './service/post.js';
 import { UserinfoService } from './service/userinfo.js'
 import db from './models/index.js';
@@ -19,8 +17,6 @@ import sequelize from './models/index.js';
 let container = new Container();
 container.bind<CommentService>(TYPES.CommentService).to(CommentService);
 container.bind<FriendService>(TYPES.FriendService).to(FriendService);
-container.bind<JwtService>(TYPES.JwtService).to(JwtService);
-container.bind<LogoutService>(TYPES.LogoutService).to(LogoutService);
 container.bind<PostService>(TYPES.PostService).to(PostService);
 container.bind<UserinfoService>(TYPES.UserinfoService).to(UserinfoService);
 
@@ -41,8 +37,6 @@ server.setConfig((app) => {
 
 import './controllers/comment.js';
 import './controllers/friend.js';
-import './controllers/jwt.js';
-import './controllers/logout.js';
 import './controllers/post.js';
 import './controllers/userinfo.js';
 

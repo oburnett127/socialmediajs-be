@@ -89,14 +89,11 @@ export class UserinfoService {
     }
 }
 
-  public async findAll(): Promise<Userinfo[] | void> {
-    return Userinfo.findAll()
-      .then((data: any) => data)
-      .catch((err: { message: any; }) => { logger.error(err.message); throw err; });
-  }
-
   public async getUserByUserId(id: string): Promise<Userinfo | void> {
-    return Userinfo.findByPk(id)
+    return Userinfo.findOne({
+      where: { id: id },
+      attributes: { exclude: ['password'] },
+    })
       .then((data: any) => data)
       .catch((err: any) => {logger.error(err.message); throw err; });
   }
@@ -104,6 +101,7 @@ export class UserinfoService {
   public async getUserByEmail(email: string): Promise<Userinfo | void> {
     return Userinfo.findOne({
       where: { email: email },
+      attributes: { exclude: ['password'] },
     })
     .then((data: any) => data)
     .catch((err: any) => {logger.error(err.message); throw err; });
@@ -141,14 +139,16 @@ export class UserinfoService {
               const users = await Userinfo.findAll({
                   where: {
                       firstName: firstName,
-                      lastName: lastName
+                      lastName: lastName,
+                      attributes: { exclude: ['password'] },
                   }
               }) as Userinfo[];
               
               const reverseOrderUsers = await Userinfo.findAll({
                   where: {
                     lastName: firstName,
-                    firstName: lastName
+                    firstName: lastName,
+                    attributes: { exclude: ['password'] },
                   }
               }) as Userinfo[];
 
@@ -163,7 +163,8 @@ export class UserinfoService {
                       [Op.or]: [
                           { firstName: providedName },
                           { lastName: providedName }
-                      ]
+                      ],
+                      attributes: { exclude: ['password'] },
                   }
               }) as Userinfo[];
 
@@ -181,7 +182,9 @@ export class UserinfoService {
   public async getRoleByUserId(userId: string): Promise<string> {
     try {
       const userinfo = await Userinfo.findOne({
-        where: {  userId: userId  }
+        where: {  userId: userId,
+          attributes: { exclude: ['password'] },
+        }
       })
       if(!userinfo) return "";
       else {

@@ -1,4 +1,4 @@
-import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, HasMany } from 'sequelize-typescript';
+import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
 
 @Table
 export class Userinfo extends Model {
@@ -32,6 +32,9 @@ export class Userinfo extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
   })
   private password!: string;
 

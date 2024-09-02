@@ -1,6 +1,6 @@
 // rabbitmq/rabbitTemplate.ts
 import amqp, { Channel, Connection } from 'amqplib';
-import { rabbitmqConfig } from '../config/rabbitmqconfig';
+import { rabbitmqConfig } from '../config/rabbitmqconfig.js';
 
 class RabbitTemplate {
     private connection: Connection | null = null;

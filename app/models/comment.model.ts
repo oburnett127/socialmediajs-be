@@ -1,5 +1,6 @@
 import { Model, Table, Column, DataType, PrimaryKey, AutoIncrement, ForeignKey } from 'sequelize-typescript';
 import { Userinfo } from './userinfo.model.js';
+import { Post } from './post.model.js';
 
 @Table
 export class Comment extends Model {
