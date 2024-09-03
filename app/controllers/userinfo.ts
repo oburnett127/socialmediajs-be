@@ -100,7 +100,7 @@ export class UserinfoController implements interfaces.Controller {
     }
   }
   
-  @httpPost('/create')
+  @httpPost('/signup')
   private async createUserinfo(@request() req: express.Request, @response() res: express.Response): Promise<void> {
     const userinfo: UserinfoPayload = req.body;
 

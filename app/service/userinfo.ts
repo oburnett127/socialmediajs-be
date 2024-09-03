@@ -10,6 +10,7 @@ export interface UserinfoPayload {
   password: string;
   firstName: string;
   lastName: string;
+  roles: string;
 }
 
 export interface LoginPayload {
@@ -65,7 +66,7 @@ export class UserinfoService {
       const hashedPassword = await bcrypt.hash(userinfo.password, 10);
   
       userinfo.password = hashedPassword;
-  
+      userinfo.roles = "USER";
       const newUserinfo = await Userinfo.create(userinfo as any);
       return newUserinfo;
     } catch (err: any) {

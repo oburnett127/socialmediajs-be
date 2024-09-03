@@ -220,3 +220,8 @@
 {"level":"info","message":"Server started on port 8080 :)"}
 {"level":"info","message":"Server started on port 8080 :)"}
 {"level":"info","message":"Server started on port 7050 :)"}
+{"level":"info","message":"Server started on port 7050 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"info","message":"Server started on port 8080 :)"}
+{"level":"error","message":"notNull Violation: Userinfo.roles cannot be null"}
+{"level":"info","message":"Server started on port 8080 :)"}

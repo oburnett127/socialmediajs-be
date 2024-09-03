@@ -55,7 +55,7 @@ sequelize.sync()
 const serverInstance = server.build();
 
 const portString: string | undefined = process.env.PORT;
-const port: number = parseInt(portString || '7050', 10);
+const port: number = parseInt(portString || '8080', 10);
 
 serverInstance.listen(port);
 
