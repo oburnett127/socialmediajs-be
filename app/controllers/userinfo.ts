@@ -54,7 +54,9 @@ export class UserinfoController implements interfaces.Controller {
     try {
       logger.info('login function called');
 
-      const loginInfo: LoginPayload = req.body;
+      const providedInfo: UserinfoPayload = req.body;
+      const loginInfo: LoginPayload = {id: 1, email: providedInfo.email, password: providedInfo.password}
+
   
       if (!loginInfo) {
         res.sendStatus(400);
