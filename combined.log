@@ -277,3 +277,8 @@
 {"level":"info","message":"userAuthorized is: true"}
 {"level":"info","message":"login function called"}
 {"level":"info","message":"userAuthorized is: true"}
+{"level":"info","message":"Server started on port 3000 :)"}
+{"level":"info","message":"Server started on port 3000 and available at 0.0.0.0"}
+{"level":"info","message":"Server started on port 3000 and available at 0.0.0.0"}
+{"level":"info","message":"login function called"}
+{"level":"info","message":"userAuthorized is: true"}

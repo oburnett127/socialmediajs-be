@@ -38,7 +38,7 @@ server.setConfig((app) => {
 });
 
 import './controllers/comment.js';
-import './controllers/friend.js';
+import './controllers/friend.js'; 
 import './controllers/post.js';
 import './controllers/userinfo.js';
 
@@ -57,6 +57,6 @@ const serverInstance = server.build();
 //const portString: string | undefined = process.env.PORT;
 const port: number = parseInt('3000', 10);
 
-serverInstance.listen(port);
-
-logger.info(`Server started on port ${port} :)`);
+serverInstance.listen(port, '0.0.0.0', () => {
+  logger.info(`Server started on port ${port} and available at 0.0.0.0`);
+});
