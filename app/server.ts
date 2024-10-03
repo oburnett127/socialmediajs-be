@@ -30,10 +30,10 @@ server.setConfig((app) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(cors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-  }));
+  }));  
   app.use(passport.initialize());
 });
 
